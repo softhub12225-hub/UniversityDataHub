@@ -676,22 +676,21 @@
   gap: 11px;
   flex-wrap: wrap;
 }
-/* Two classes so the rule cannot be shadowed, and `text-decoration` spelled out
-   rather than left to the default. The stylesheet has never underlined these; if a
-   line still appears under a name it is being drawn by something outside the page. */
-.pf .pf-result-title a {
+/* The institution name is text, not a control.
+ *
+ * It was an anchor pointing at the same page as the row's button, so the card had two
+ * ways to do one thing -- and being an anchor is what kept putting an underline under
+ * it: a link inherits link decoration, and anything that treats links specially, a
+ * browser default or a translation extension marking the only `lang="en"` text on a
+ * Chinese page, has something to attach to. A span has none of that to inherit.
+ *
+ * It also stopped needing a hover or a focus style, because there is nothing to
+ * hover or focus: the row's single control is the button, and it has both. */
+.pf-result-name {
   font-size: 17.5px;
   font-weight: 600;
   color: var(--pf-ink);
   text-decoration: none;
-}
-/* No hover treatment, deliberately. The underline-and-recolour default read as an
-   error state against a list of institution names, and every row already carries a
-   More Detail button as its affordance. Keyboard focus is still shown -- that is
-   navigation, not decoration. */
-.pf .pf-result-title a:focus-visible {
-  outline: 2px solid var(--pf-accent);
-  outline-offset: 2px;
 }
 .pf-where {
   font-size: 13.5px;

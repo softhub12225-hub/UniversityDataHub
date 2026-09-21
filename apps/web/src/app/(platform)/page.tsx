@@ -323,9 +323,16 @@ export default async function CataloguePage({
                     <Crest name={institution.name} verified={verified} />
                     <div className="pf-result-text">
                       <div className="pf-result-title">
-                        <Link href={dossier} lang="en">
+                        {/* Plain text, not a link.
+                            It used to be a second route to the same page as the
+                            button on the right, which is one destination with two
+                            controls -- and being an anchor is what gave it an
+                            underline to argue about in the first place. A span has
+                            no link decoration to inherit and nothing that treats
+                            links specially can add one. */}
+                        <span className="pf-result-name" lang="en">
                           {institution.name}
-                        </Link>
+                        </span>
                         {verified ? (
                           <span className="pf-tag pf-tag-verified">
                             <Tick />
@@ -377,7 +384,17 @@ export default async function CataloguePage({
                       {/* BurstLink rather than Link: the row's one action throws off
                           a burst of light where it is pressed. It does not delay the
                           navigation -- see the component. */}
-                      <BurstLink className="pf-btn pf-btn-solid" href={dossier}>
+                      {/* The card's only link now, so it has to carry the name in
+                          its accessible label: a screen reader listing the links on
+                          this page would otherwise read twenty identical "More
+                          Detail"s with nothing to tell them apart. The visible words
+                          stay inside the label, so voice control still matches on
+                          what is written on the button. */}
+                      <BurstLink
+                        className="pf-btn pf-btn-solid"
+                        href={dossier}
+                        ariaLabel={`${copy.moreDetail} — ${institution.name}`}
+                      >
                         {copy.moreDetail}
                       </BurstLink>
                     </div>

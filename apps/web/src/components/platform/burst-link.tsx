@@ -59,10 +59,17 @@ export function BurstLink({
   href,
   className,
   children,
+  ariaLabel,
 }: {
   href: string;
   className?: string;
   children: React.ReactNode;
+  /**
+   * Overrides the accessible name. Used where several of these sit on one page with
+   * the same visible words and only the destination differs -- a list of results,
+   * where "More Detail" alone tells a screen reader nothing about which.
+   */
+  ariaLabel?: string;
 }) {
   const [bursts, setBursts] = useState<readonly Burst[]>([]);
   const [mounted, setMounted] = useState(false);
@@ -106,7 +113,7 @@ export function BurstLink({
 
   return (
     <>
-      <Link href={href} className={className} onClick={fire}>
+      <Link href={href} className={className} aria-label={ariaLabel} onClick={fire}>
         {children}
       </Link>
       {mounted && bursts.length > 0
