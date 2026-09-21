@@ -19,7 +19,10 @@ export default async function SystemStatusPage() {
   const result = await getReadiness();
 
   return (
-    <>
+    // Wrapped because the root layout no longer supplies padding: each surface owns
+    // its frame now, and this page sits inside the platform's.
+    <div className="pf-doc">
+      <div className="pf-doc-main">
       <h1>System status</h1>
       <p className="muted">
         Live result of <code>GET /health/ready</code> on the backend. Environment:{" "}
@@ -63,6 +66,7 @@ export default async function SystemStatusPage() {
           ) : null}
         </>
       )}
-    </>
+      </div>
+    </div>
   );
 }

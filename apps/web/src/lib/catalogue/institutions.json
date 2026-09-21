@@ -1,0 +1,1460 @@
+{
+  "source": {
+    "workbook": "QS_2027_世界前500_指定地区院校.xlsx",
+    "upstream": "QS World University Rankings 2027, official Excel v1.1",
+    "publishedAt": "2026-06-18",
+    "filter": "QS 2027 global rank <= 500, restricted to 8 destinations",
+    "note": "Rank and overall score are read from the workbook but deliberately not stored or displayed: selecting the catalogue by rank is an editorial choice, publishing rank is redistribution."
+  },
+  "count": 181,
+  "institutions": [
+    {
+      "slug": "adelaide-university",
+      "name": "Adelaide University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "arizona-state-university",
+      "name": "Arizona State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "aston-university",
+      "name": "Aston University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "auckland-university-of-technology-aut",
+      "name": "Auckland University of Technology (AUT)",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "australian-national-university-anu",
+      "name": "Australian National University (ANU)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "birkbeck-university-of-london",
+      "name": "Birkbeck, University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "boston-university",
+      "name": "Boston University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "brown-university",
+      "name": "Brown University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "brunel-university-of-london",
+      "name": "Brunel University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "california-institute-of-technology-caltech",
+      "name": "California Institute of Technology (Caltech)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "cardiff-university",
+      "name": "Cardiff University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "carnegie-mellon-university",
+      "name": "Carnegie Mellon University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "case-western-reserve-university",
+      "name": "Case Western Reserve University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "central-queensland-university-cquniversity-australia",
+      "name": "Central Queensland University (CQUniversity Australia)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "city-st-georges-university-of-london",
+      "name": "City St George’s, University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "city-university-of-hong-kong-cityuhk",
+      "name": "City University of Hong Kong (CityUHK)",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "columbia-university",
+      "name": "Columbia University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "concordia-university",
+      "name": "Concordia University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "cornell-university",
+      "name": "Cornell University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "curtin-university",
+      "name": "Curtin University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "dalhousie-university",
+      "name": "Dalhousie University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "dartmouth-college",
+      "name": "Dartmouth College",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "deakin-university",
+      "name": "Deakin University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "duke-university",
+      "name": "Duke University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "durham-university",
+      "name": "Durham University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "emory-university",
+      "name": "Emory University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "essex-university-of",
+      "name": "Essex, University of",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "flinders-university",
+      "name": "Flinders University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "george-washington-university",
+      "name": "George Washington University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "georgetown-university",
+      "name": "Georgetown University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "georgia-institute-of-technology",
+      "name": "Georgia Institute of Technology",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "griffith-university",
+      "name": "Griffith University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "harvard-university",
+      "name": "Harvard University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "heriot-watt-university",
+      "name": "Heriot-Watt University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "hong-kong-baptist-university",
+      "name": "Hong Kong Baptist University",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "imperial-college-london",
+      "name": "Imperial College London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "indiana-university-bloomington",
+      "name": "Indiana University Bloomington",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "james-cook-university",
+      "name": "James Cook University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "johns-hopkins-university",
+      "name": "Johns Hopkins University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "king-s-college-london",
+      "name": "King's College London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "la-trobe-university",
+      "name": "La Trobe University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "lancaster-university",
+      "name": "Lancaster University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "lincoln-university",
+      "name": "Lincoln University",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "loughborough-university",
+      "name": "Loughborough University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "macau-university-of-science-and-technology",
+      "name": "Macau University of Science and Technology",
+      "destination": "中国澳门",
+      "destinationEn": "Macao SAR",
+      "destinationCode": "MO",
+      "country": "Macao SAR, China"
+    },
+    {
+      "slug": "macquarie-university-sydney-australia",
+      "name": "Macquarie University (Sydney, Australia)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "massachusetts-institute-of-technology-mit",
+      "name": "Massachusetts Institute of Technology (MIT)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "massey-university",
+      "name": "Massey University",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "mcgill-university",
+      "name": "McGill University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "mcmaster-university",
+      "name": "McMaster University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "michigan-state-university",
+      "name": "Michigan State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "monash-university",
+      "name": "Monash University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "murdoch-university",
+      "name": "Murdoch University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "nanyang-technological-university-singapore-ntu-singapore",
+      "name": "Nanyang Technological University, Singapore (NTU Singapore)",
+      "destination": "新加坡",
+      "destinationEn": "Singapore",
+      "destinationCode": "SG",
+      "country": "Singapore"
+    },
+    {
+      "slug": "national-university-of-singapore-nus",
+      "name": "National University of Singapore (NUS)",
+      "destination": "新加坡",
+      "destinationEn": "Singapore",
+      "destinationCode": "SG",
+      "country": "Singapore"
+    },
+    {
+      "slug": "new-york-university-nyu",
+      "name": "New York University (NYU)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "newcastle-university",
+      "name": "Newcastle University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "north-carolina-state-university",
+      "name": "North Carolina State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "northeastern-university",
+      "name": "Northeastern University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "northwestern-university",
+      "name": "Northwestern University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "oxford-brookes-university",
+      "name": "Oxford Brookes University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "pennsylvania-state-university",
+      "name": "Pennsylvania State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "princeton-university",
+      "name": "Princeton University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "purdue-university",
+      "name": "Purdue University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "queen-mary-university-of-london",
+      "name": "Queen Mary University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "queen-s-university-belfast",
+      "name": "Queen's University Belfast",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "queen-s-university-at-kingston",
+      "name": "Queen's University at Kingston",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "queensland-university-of-technology-qut",
+      "name": "Queensland University of Technology (QUT)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "rmit-university",
+      "name": "RMIT University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "rice-university",
+      "name": "Rice University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "royal-holloway-university-of-london",
+      "name": "Royal Holloway, University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "rutgers-universitynew-brunswick",
+      "name": "Rutgers University–New Brunswick",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "soas-university-of-london",
+      "name": "SOAS University of London",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "simon-fraser-university",
+      "name": "Simon Fraser University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "singapore-management-university",
+      "name": "Singapore Management University",
+      "destination": "新加坡",
+      "destinationEn": "Singapore",
+      "destinationCode": "SG",
+      "country": "Singapore"
+    },
+    {
+      "slug": "singapore-university-of-technology-and-design",
+      "name": "Singapore University of Technology and Design",
+      "destination": "新加坡",
+      "destinationEn": "Singapore",
+      "destinationCode": "SG",
+      "country": "Singapore"
+    },
+    {
+      "slug": "stanford-university",
+      "name": "Stanford University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "stony-brook-university-state-university-of-new-york",
+      "name": "Stony Brook University, State University of New York",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "swansea-university",
+      "name": "Swansea University",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "swinburne-university-of-technology",
+      "name": "Swinburne University of Technology",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "texas-a-m-university",
+      "name": "Texas A&M University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "the-chinese-university-of-hong-kong-cuhk",
+      "name": "The Chinese University of Hong Kong (CUHK)",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "the-education-university-of-hong-kong",
+      "name": "The Education University of Hong Kong",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "the-hong-kong-polytechnic-university",
+      "name": "The Hong Kong Polytechnic University",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "the-hong-kong-university-of-science-and-technology",
+      "name": "The Hong Kong University of Science and Technology",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "the-london-school-of-economics-and-political-science-lse",
+      "name": "The London School of Economics and Political Science (LSE)",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "the-ohio-state-university",
+      "name": "The Ohio State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "the-university-of-arizona",
+      "name": "The University of Arizona",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "the-university-of-auckland",
+      "name": "The University of Auckland",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "the-university-of-edinburgh",
+      "name": "The University of Edinburgh",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "the-university-of-hong-kong",
+      "name": "The University of Hong Kong",
+      "destination": "中国香港",
+      "destinationEn": "Hong Kong SAR",
+      "destinationCode": "HK",
+      "country": "Hong Kong SAR, China"
+    },
+    {
+      "slug": "the-university-of-manchester",
+      "name": "The University of Manchester",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "the-university-of-melbourne",
+      "name": "The University of Melbourne",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "the-university-of-new-south-wales-unsw-sydney",
+      "name": "The University of New South Wales (UNSW Sydney)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "the-university-of-newcastle-australia-uon",
+      "name": "The University of Newcastle, Australia (UON)",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "the-university-of-queensland",
+      "name": "The University of Queensland",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "the-university-of-sheffield",
+      "name": "The University of Sheffield",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "the-university-of-sydney",
+      "name": "The University of Sydney",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "the-university-of-warwick",
+      "name": "The University of Warwick",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "the-university-of-western-australia",
+      "name": "The University of Western Australia",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "tufts-university",
+      "name": "Tufts University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "ucl",
+      "name": "UCL",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-at-buffalo-suny",
+      "name": "University at Buffalo SUNY",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-aberdeen",
+      "name": "University of Aberdeen",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-alberta",
+      "name": "University of Alberta",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-bath",
+      "name": "University of Bath",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-birmingham",
+      "name": "University of Birmingham",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-bradford",
+      "name": "University of Bradford",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-bristol",
+      "name": "University of Bristol",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-british-columbia",
+      "name": "University of British Columbia",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-calgary",
+      "name": "University of Calgary",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-california-berkeley-ucb",
+      "name": "University of California, Berkeley (UCB)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-davis",
+      "name": "University of California, Davis",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-irvine",
+      "name": "University of California, Irvine",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-los-angeles-ucla",
+      "name": "University of California, Los Angeles (UCLA)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-riverside",
+      "name": "University of California, Riverside",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-san-diego-ucsd",
+      "name": "University of California, San Diego (UCSD)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-santa-barbara-ucsb",
+      "name": "University of California, Santa Barbara (UCSB)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-california-santa-cruz",
+      "name": "University of California, Santa Cruz",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-cambridge",
+      "name": "University of Cambridge",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-canberra",
+      "name": "University of Canberra",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "university-of-canterbury-te-whare-wananga-o-waitaha",
+      "name": "University of Canterbury | Te Whare Wānanga o Waitaha",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "university-of-chicago",
+      "name": "University of Chicago",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-colorado-boulder",
+      "name": "University of Colorado Boulder",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-connecticut",
+      "name": "University of Connecticut",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-dundee",
+      "name": "University of Dundee",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-east-anglia-uea",
+      "name": "University of East Anglia (UEA)",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-exeter",
+      "name": "University of Exeter",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-florida",
+      "name": "University of Florida",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-glasgow",
+      "name": "University of Glasgow",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-illinois-chicago-uic",
+      "name": "University of Illinois Chicago (UIC)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-illinois-urbana-champaign",
+      "name": "University of Illinois Urbana-Champaign",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-kent",
+      "name": "University of Kent",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-leeds",
+      "name": "University of Leeds",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-leicester",
+      "name": "University of Leicester",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-liverpool",
+      "name": "University of Liverpool",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-macau",
+      "name": "University of Macau",
+      "destination": "中国澳门",
+      "destinationEn": "Macao SAR",
+      "destinationCode": "MO",
+      "country": "Macao SAR, China"
+    },
+    {
+      "slug": "university-of-maryland-college-park",
+      "name": "University of Maryland, College Park",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-massachusetts-amherst",
+      "name": "University of Massachusetts Amherst",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-miami",
+      "name": "University of Miami",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-michigan-ann-arbor",
+      "name": "University of Michigan-Ann Arbor",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-minnesota-system",
+      "name": "University of Minnesota (System)",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-north-carolina-at-chapel-hill",
+      "name": "University of North Carolina at Chapel Hill",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-notre-dame",
+      "name": "University of Notre Dame",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-nottingham",
+      "name": "University of Nottingham",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-otago",
+      "name": "University of Otago",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "university-of-ottawa",
+      "name": "University of Ottawa",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-oxford",
+      "name": "University of Oxford",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-pennsylvania",
+      "name": "University of Pennsylvania",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-pittsburgh",
+      "name": "University of Pittsburgh",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-reading",
+      "name": "University of Reading",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-rochester",
+      "name": "University of Rochester",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-saskatchewan",
+      "name": "University of Saskatchewan",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-southampton",
+      "name": "University of Southampton",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-southern-california",
+      "name": "University of Southern California",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-southern-queensland",
+      "name": "University of Southern Queensland",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "university-of-st-andrews",
+      "name": "University of St Andrews",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-strathclyde",
+      "name": "University of Strathclyde",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-surrey",
+      "name": "University of Surrey",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-sussex",
+      "name": "University of Sussex",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "university-of-tasmania",
+      "name": "University of Tasmania",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "university-of-technology-sydney",
+      "name": "University of Technology Sydney",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "university-of-texas-at-austin",
+      "name": "University of Texas at Austin",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-toronto",
+      "name": "University of Toronto",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-victoria-uvic",
+      "name": "University of Victoria (UVic)",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-virginia",
+      "name": "University of Virginia",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-waikato",
+      "name": "University of Waikato",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "university-of-washington",
+      "name": "University of Washington",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-waterloo",
+      "name": "University of Waterloo",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "university-of-wisconsin-madison",
+      "name": "University of Wisconsin-Madison",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "university-of-wollongong",
+      "name": "University of Wollongong",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "university-of-york",
+      "name": "University of York",
+      "destination": "英国",
+      "destinationEn": "United Kingdom",
+      "destinationCode": "GB",
+      "country": "United Kingdom"
+    },
+    {
+      "slug": "universite-de-montreal",
+      "name": "Université de Montréal",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "vanderbilt-university",
+      "name": "Vanderbilt University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "victoria-university-of-wellington",
+      "name": "Victoria University of Wellington",
+      "destination": "新西兰",
+      "destinationEn": "New Zealand",
+      "destinationCode": "NZ",
+      "country": "New Zealand"
+    },
+    {
+      "slug": "virginia-polytechnic-institute-and-state-university",
+      "name": "Virginia Polytechnic Institute and State University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "washington-university-in-st-louis",
+      "name": "Washington University in St. Louis",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "western-sydney-university",
+      "name": "Western Sydney University",
+      "destination": "澳大利亚",
+      "destinationEn": "Australia",
+      "destinationCode": "AU",
+      "country": "Australia"
+    },
+    {
+      "slug": "western-university",
+      "name": "Western University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    },
+    {
+      "slug": "yale-university",
+      "name": "Yale University",
+      "destination": "美国",
+      "destinationEn": "United States",
+      "destinationCode": "US",
+      "country": "United States of America"
+    },
+    {
+      "slug": "york-university",
+      "name": "York University",
+      "destination": "加拿大",
+      "destinationEn": "Canada",
+      "destinationCode": "CA",
+      "country": "Canada"
+    }
+  ]
+}

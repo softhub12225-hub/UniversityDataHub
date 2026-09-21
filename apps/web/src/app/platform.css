@@ -1,0 +1,820 @@
+/*
+ * The public platform's design language.
+ *
+ * DELIBERATELY NOT THE PORTAL TEMPLATE
+ * ====================================
+ * Study-abroad portals converge on one layout: photographic hero, floating search
+ * box, degree-level chips, "popular universities" card grid, discipline tiles, then a
+ * left filter rail beside logo-thumbnail result cards. A first draft reproduced it and
+ * was rejected for looking like mastersportal.com, correctly.
+ *
+ * So: search is the application frame, not a hero — a persistent bar in a dark top
+ * rail. Photography is an edge plate in the masthead, subordinate to type. The ground
+ * is warm parchment rather than white or SaaS blue, the accent is a single oxblood,
+ * rules are hairlines, and numerals are tabular. It should read as a reference work
+ * that happens to be searchable.
+ *
+ * WHY ONE STYLESHEET AND NOT UTILITY CLASSES
+ * ==========================================
+ * The surface is small and the vocabulary is shared (rail, facet, result, provenance).
+ * Naming those once keeps the pages readable and keeps the provenance treatment
+ * consistent, which is the one thing that must never drift: a fact without its source
+ * line is the failure this product exists to prevent.
+ */
+
+.pf {
+  /* ground and ink */
+  --pf-ground: #f4f1e8;
+  --pf-paper: #fcfbf7;
+  --pf-ink: #141a18;
+  --pf-ink-2: #4a534f;
+  --pf-ink-3: #6b736f;
+  --pf-rule: #d9d3c4;
+  --pf-rule-soft: #efeae0;
+
+  /* one accent, plus the two states that carry meaning */
+  --pf-accent: #8c2f1f;
+  --pf-accent-ink: #6b2116;
+  --pf-verified: #1e6b4f;
+  --pf-verified-bg: #eaf2ec;
+  --pf-verified-rule: #bfd8c9;
+  --pf-pending: #8a5a12;
+  --pf-pending-bg: #f6eede;
+  --pf-pending-rule: #e3d3b4;
+
+  /* the dark rail */
+  --pf-rail: #141a18;
+  --pf-rail-2: #22292a;
+  --pf-rail-rule: #39423f;
+  --pf-rail-ink: #c9cfcb;
+  --pf-rail-ink-2: #8e948f;
+  --pf-sand: #f4c9a0;
+
+  --pf-serif: Fraunces, "Noto Serif SC", Georgia, serif;
+  --pf-sans: "Instrument Sans", "Noto Sans SC", system-ui, sans-serif;
+
+  background: var(--pf-ground);
+  color: var(--pf-ink);
+  font-family: var(--pf-sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf a {
+  color: var(--pf-accent);
+}
+.pf a:hover {
+  color: var(--pf-accent-ink);
+}
+
+/* ── the app rail: search lives here, not in a hero ───────────────────── */
+
+.pf-rail {
+  background: var(--pf-rail);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 28px;
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+
+.pf-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.pf-brand span {
+  font-family: var(--pf-serif);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pf-sand);
+}
+
+.pf-railsearch {
+  flex: 1 1 320px;
+  max-width: 660px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  background: var(--pf-rail-2);
+  border: 1px solid var(--pf-rail-rule);
+}
+.pf-railsearch input {
+  flex-grow: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: var(--pf-paper);
+  outline: none;
+}
+.pf-railsearch input::placeholder {
+  color: var(--pf-rail-ink-2);
+}
+
+.pf-railnav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 13.5px;
+  margin-left: auto;
+}
+.pf-railnav a {
+  color: var(--pf-rail-ink);
+  text-decoration: none;
+}
+.pf-railnav a:hover {
+  color: #fff;
+}
+.pf-railnav a.pf-quiet {
+  color: var(--pf-rail-ink-2);
+}
+.pf-railnav .pf-cta {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background: var(--pf-sand);
+  color: #2a1512;
+  font-weight: 600;
+}
+.pf-railnav .pf-cta:hover {
+  background: #fff;
+  color: #2a1512;
+}
+
+/* ── masthead: type left, photographic plate at the edge ──────────────── */
+
+.pf-masthead {
+  display: flex;
+  background: var(--pf-paper);
+  border-bottom: 1px solid var(--pf-rule);
+}
+.pf-masthead-body {
+  flex-grow: 1;
+  padding: 16px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+}
+.pf-masthead h1 {
+  margin: 0;
+  font-family: var(--pf-serif);
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  color: var(--pf-ink);
+}
+.pf-colophon {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--pf-ink-3);
+}
+.pf-plate {
+  width: 292px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.pf-plate svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* The placeholder mark is part of the design until licensed photography arrives:
+   an unlabelled illustration would quietly become the final asset. */
+.pf-plate-note {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  padding: 3px 7px;
+  border: 1px dashed rgba(244, 201, 160, 0.65);
+  color: var(--pf-sand);
+  font-size: 10px;
+}
+@media (max-width: 900px) {
+  .pf-plate {
+    display: none;
+  }
+}
+
+/* ── the two-column body ──────────────────────────────────────────────── */
+
+.pf-body {
+  flex-grow: 1;
+  padding: 20px 28px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.pf-facets {
+  width: 286px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 20px;
+}
+.pf-results {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+@media (max-width: 1000px) {
+  .pf-body {
+    flex-direction: column;
+  }
+  .pf-facets {
+    width: auto;
+    position: static;
+  }
+}
+
+/* ── facets ───────────────────────────────────────────────────────────── */
+
+.pf-facet-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.pf-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pf-ink-3);
+}
+.pf-hr {
+  flex-grow: 1;
+  height: 1px;
+  background: var(--pf-rule);
+}
+
+.pf-facet {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-paper);
+}
+/* The verification facet is the one no competitor has, so it is framed harder. */
+.pf-facet-primary {
+  border: 1.5px solid var(--pf-ink);
+}
+.pf-facet legend {
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pf-ink);
+}
+.pf-facet-primary legend {
+  font-family: var(--pf-serif);
+  font-size: 13.5px;
+}
+.pf-facet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 5px;
+}
+.pf-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  cursor: pointer;
+  /* 44px targets are for pointers; a label row in a dense facet list is judged on
+     the whole row being clickable, which it is. */
+  min-height: 24px;
+}
+.pf-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--pf-accent);
+  flex-shrink: 0;
+}
+.pf-facet-primary .pf-check input {
+  accent-color: var(--pf-verified);
+}
+.pf-check-label {
+  flex-grow: 1;
+}
+.pf-count {
+  font-family: var(--pf-serif);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--pf-ink-2);
+}
+.pf-count-verified {
+  color: var(--pf-verified);
+}
+.pf-count-pending {
+  color: var(--pf-pending);
+}
+.pf-facet-note {
+  margin: 11px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--pf-ink-3);
+}
+
+.pf-notice {
+  padding: 12px 14px;
+  border: 1px dashed #c9c0ae;
+  background: var(--pf-paper);
+  display: flex;
+  gap: 9px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--pf-ink-2);
+}
+.pf-notice svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── result controls ──────────────────────────────────────────────────── */
+
+.pf-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.pf-scope {
+  display: flex;
+  border: 1.5px solid var(--pf-ink);
+}
+.pf-scope a,
+.pf-scope span {
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.pf-scope .pf-on {
+  background: var(--pf-ink);
+  color: var(--pf-paper);
+  font-weight: 600;
+}
+.pf-scope .pf-off {
+  background: var(--pf-paper);
+  color: var(--pf-ink-3);
+  border-left: 1.5px solid var(--pf-ink);
+}
+.pf-tally {
+  flex-grow: 1;
+  font-size: 13px;
+  color: var(--pf-ink-3);
+}
+.pf-tally strong {
+  color: var(--pf-ink);
+  font-variant-numeric: tabular-nums;
+}
+.pf-select {
+  height: 34px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-paper);
+  font: inherit;
+  font-size: 13px;
+  color: var(--pf-ink);
+}
+
+.pf-chips {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.pf-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  background: var(--pf-paper);
+  border: 1px solid var(--pf-rule);
+  font-size: 12.5px;
+  color: var(--pf-ink);
+  text-decoration: none;
+}
+.pf-chip-verified {
+  background: var(--pf-verified-bg);
+  border-color: var(--pf-verified-rule);
+  color: var(--pf-verified);
+  font-weight: 600;
+}
+
+/* ── results ──────────────────────────────────────────────────────────── */
+
+.pf-result {
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-paper);
+  display: flex;
+}
+/* A verified institution is framed, not decorated: the left bar is the state. */
+.pf-result-verified {
+  border: 1.5px solid var(--pf-ink);
+}
+.pf-result-bar {
+  width: 5px;
+  flex-shrink: 0;
+  background: #d9c9a3;
+}
+.pf-result-verified .pf-result-bar {
+  background: var(--pf-verified);
+}
+.pf-result-main {
+  flex-grow: 1;
+  padding: 16px 20px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.pf-crest {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+.pf-result-text {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pf-result-title {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  flex-wrap: wrap;
+}
+.pf-result-title a {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--pf-ink);
+  text-decoration: none;
+}
+.pf-result-title a:hover {
+  color: var(--pf-accent);
+  text-decoration: underline;
+}
+.pf-where {
+  font-size: 13.5px;
+  color: var(--pf-ink-2);
+}
+.pf-result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pf-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pf-tag-verified {
+  background: var(--pf-verified-bg);
+  border: 1px solid var(--pf-verified-rule);
+  color: var(--pf-verified);
+}
+.pf-tag-pending {
+  background: var(--pf-pending-bg);
+  border: 1px solid var(--pf-pending-rule);
+  color: var(--pf-pending);
+}
+
+/* The provenance line. Every result carries one; that is the product. */
+.pf-prov {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--pf-rule-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--pf-ink-2);
+}
+.pf-prov svg {
+  flex-shrink: 0;
+}
+.pf-prov-text {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.pf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pf-btn-solid {
+  background: var(--pf-ink);
+  color: var(--pf-paper);
+  border: 1.5px solid var(--pf-ink);
+}
+.pf-btn-solid:hover {
+  background: var(--pf-accent);
+  border-color: var(--pf-accent);
+  color: #fff;
+}
+.pf-btn-outline {
+  background: var(--pf-paper);
+  color: var(--pf-ink);
+  border: 1.5px solid var(--pf-ink);
+}
+.pf-btn-outline:hover {
+  background: var(--pf-ground);
+}
+
+/* ── pager ────────────────────────────────────────────────────────────── */
+
+.pf-pager {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pf-pager-tally {
+  flex-grow: 1;
+  font-size: 12.5px;
+  color: var(--pf-ink-3);
+}
+.pf-page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-paper);
+  font: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--pf-ink);
+  text-decoration: none;
+}
+.pf-page-on {
+  border: 1.5px solid var(--pf-ink);
+  background: var(--pf-ink);
+  color: var(--pf-paper);
+  font-weight: 600;
+}
+.pf-page-off {
+  color: #a8a197;
+  background: #faf8f1;
+  border-color: #e0dacb;
+  cursor: not-allowed;
+}
+
+/* ── institution dossier ──────────────────────────────────────────────── */
+
+.pf-doc {
+  flex-grow: 1;
+  padding: 22px 28px;
+  background: var(--pf-paper);
+  display: flex;
+  gap: 26px;
+  align-items: flex-start;
+}
+.pf-doc-main {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.pf-doc-rail {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@media (max-width: 1000px) {
+  .pf-doc {
+    flex-direction: column;
+  }
+  .pf-doc-rail {
+    width: auto;
+  }
+}
+
+.pf-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--pf-ink);
+  flex-wrap: wrap;
+}
+.pf-section-head h2 {
+  margin: 0;
+  font-family: var(--pf-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--pf-ink);
+}
+.pf-section-note {
+  flex-grow: 1;
+  font-size: 12.5px;
+  color: var(--pf-ink-3);
+}
+
+.pf-facts {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.pf-fact {
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-ground);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.pf-fact-pending {
+  background: #faf5ea;
+  border-color: var(--pf-pending-rule);
+}
+.pf-fact-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pf-fact-label span:first-child {
+  flex-grow: 1;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--pf-ink-3);
+}
+/* A value the platform cannot yet stand behind. Styled as a real state, because
+   it is one — not as an error, and never filled with a guess. */
+.pf-fact-value {
+  font-family: var(--pf-serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--pf-ink);
+}
+.pf-fact-value-pending {
+  font-size: 19px;
+  color: var(--pf-pending);
+}
+.pf-fact-prov {
+  padding-top: 7px;
+  border-top: 1px solid #e0dacb;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--pf-ink-2);
+}
+
+.pf-rail-card {
+  padding: 16px;
+  box-sizing: border-box;
+  background: var(--pf-rail);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pf-rail-card .pf-eyebrow {
+  color: var(--pf-sand);
+}
+.pf-rail-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--pf-paper);
+}
+.pf-rail-line svg {
+  flex-shrink: 0;
+}
+.pf-rail-small {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--pf-rail-ink-2);
+}
+
+.pf-list-card {
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid var(--pf-rule);
+  background: var(--pf-ground);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pf-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+}
+.pf-dot-on {
+  background: var(--pf-verified);
+}
+.pf-dot-off {
+  background: #c9a25a;
+}
+
+.pf-callout {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  background: var(--pf-ground);
+  border: 1px solid var(--pf-rule);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--pf-ink-2);
+}
+.pf-callout strong {
+  color: var(--pf-ink);
+}
+.pf-callout-warn {
+  background: var(--pf-pending-bg);
+  border-color: var(--pf-pending-rule);
+  color: #6b4a12;
+}
+
+.pf-empty {
+  padding: 26px;
+  box-sizing: border-box;
+  border: 1px dashed #c9c0ae;
+  background: var(--pf-paper);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+
+.pf-foot {
+  padding: 16px 28px;
+  background: var(--pf-rail);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.pf-foot-brand {
+  font-family: var(--pf-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pf-sand);
+}
+.pf-foot-note {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--pf-rail-ink-2);
+}
+
+.pf-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
