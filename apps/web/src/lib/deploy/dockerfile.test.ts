@@ -82,3 +82,26 @@ describe("the production image", () => {
     expect(existsSync(resolve(REPO, "apps/web/public"))).toBe(true);
   });
 });
+
+describe("cache mounts", () => {
+  // Railway's Dockerfile validator requires `id=s/<service id>-<target path>` and its
+  // docs state that environment variables are invalid inside a cache mount id. So a
+  // mount here means hardcoding one platform's service UUID into an image that
+  // Compose and CI also build. There are none, and the API image made the same call.
+  //
+  // BuildKit accepts the plain form, and so did the CI docker job -- the only thing
+  // that objected was a deployment, which is why this is asserted here.
+  const RAILWAY_CACHE_ID = /id=s\/[0-9a-fA-F-]{36}-/;
+
+  it("are absent, or carry the id Railway requires", () => {
+    const dockerfile = readFileSync(DOCKERFILE, "utf8");
+    const mounts = dockerfile
+      .split("\n")
+      .filter((line) => !line.trim().startsWith("#"))
+      .flatMap((line) => line.match(/--mount=\S+/g) ?? [])
+      .filter((spec) => spec.includes("type=cache"));
+
+    const bad = mounts.filter((spec) => !RAILWAY_CACHE_ID.test(spec));
+    expect(bad).toEqual([]);
+  });
+});

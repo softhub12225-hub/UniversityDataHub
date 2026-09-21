@@ -15,9 +15,20 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/web/package.json apps/web/
 COPY packages/api-types/package.json packages/api-types/
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm config set store-dir /pnpm/store \
-    && pnpm install --frozen-lockfile
+# NO CACHE MOUNT, AND THAT IS A DECISION
+# ======================================
+# This used to be `--mount=type=cache,id=pnpm,target=/pnpm/store`. It is valid
+# BuildKit and it built green in CI -- and Railway's Dockerfile validator rejects
+# the file before the build starts, because it requires
+# `id=s/<service id>-<target path>` and its docs are explicit that environment
+# variables are invalid inside a cache mount id. Keeping the mount would mean
+# hardcoding one platform's service UUID into an image Compose and CI also build.
+#
+# The cost is small: the COPY order above is manifests first, so the install layer
+# is reused on every build that does not change pnpm-lock.yaml.
+#
+# The API image made the same call for the same reason -- see api.Dockerfile.
+RUN pnpm install --frozen-lockfile
 
 # ---------------------------------------------------------------------------
 # Stage 2: build
