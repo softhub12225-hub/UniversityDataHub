@@ -198,34 +198,18 @@
   letter-spacing: -0.5px;
   color: var(--pf-ink);
 }
-.pf-colophon {
-  margin: 0;
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: var(--pf-ink-3);
-}
 .pf-plate {
   width: 292px;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
 }
-.pf-plate svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-/* The placeholder mark is part of the design until licensed photography arrives:
-   an unlabelled illustration would quietly become the final asset. */
-.pf-plate-note {
-  position: absolute;
-  right: 8px;
-  bottom: 7px;
-  padding: 3px 7px;
-  border: 1px dashed rgba(244, 201, 160, 0.65);
-  color: var(--pf-sand);
-  font-size: 10px;
+/* next/image with `fill` absolutely positions the img itself, so the plate only has
+   to say how it should be cropped. `object-position` favours the centre band, where
+   the courtyard sits between the two shelf walls. */
+.pf-plate img {
+  object-fit: cover;
+  object-position: center;
 }
 @media (max-width: 900px) {
   .pf-plate {
@@ -355,20 +339,6 @@
   color: var(--pf-ink-3);
 }
 
-.pf-notice {
-  padding: 12px 14px;
-  border: 1px dashed #c9c0ae;
-  background: var(--pf-paper);
-  display: flex;
-  gap: 9px;
-  font-size: 11.5px;
-  line-height: 1.55;
-  color: var(--pf-ink-2);
-}
-.pf-notice svg {
-  flex-shrink: 0;
-  margin-top: 1px;
-}
 
 /* ── result controls ──────────────────────────────────────────────────── */
 
@@ -493,9 +463,13 @@
   color: var(--pf-ink);
   text-decoration: none;
 }
-.pf-result-title a:hover {
-  color: var(--pf-accent);
-  text-decoration: underline;
+/* No hover treatment, deliberately. The underline-and-turn-red default read as an
+   error state against a list of institution names, and every row already carries a
+   More Detail button as its affordance. Keyboard focus is still shown -- that is
+   navigation, not decoration. */
+.pf-result-title a:focus-visible {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: 2px;
 }
 .pf-where {
   font-size: 13.5px;
@@ -546,6 +520,26 @@
 .pf-prov-text {
   flex-grow: 1;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pf-prov-label {
+  color: var(--pf-ink-3);
+}
+/* Underlined because they leave the site, and a bare colour change is not enough on
+   its own to say "link". These are the one place on the card where a hover response
+   is right: they go somewhere external, and that is worth confirming before a click. */
+.pf-src {
+  color: var(--pf-ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--pf-rule);
+  text-underline-offset: 2px;
+}
+.pf-src:hover {
+  color: var(--pf-accent);
+  text-decoration-color: var(--pf-accent);
 }
 
 .pf-btn {
@@ -562,15 +556,20 @@
   white-space: nowrap;
   cursor: pointer;
 }
+/* The accent, not near-black. Black read as furniture rather than as the row's
+   action, and it was the heaviest thing on a light page -- the eye went to it before
+   the institution name. Oxblood is the palette's one action colour and is already
+   what every link on the page uses, so the primary button now matches rather than
+   competes. Hover darkens rather than switching hue: the affordance is confirmed,
+   not restated. */
 .pf-btn-solid {
-  background: var(--pf-ink);
-  color: var(--pf-paper);
-  border: 1.5px solid var(--pf-ink);
+  background: var(--pf-accent);
+  color: #fff;
+  border: 1.5px solid var(--pf-accent);
 }
 .pf-btn-solid:hover {
-  background: var(--pf-accent);
-  border-color: var(--pf-accent);
-  color: #fff;
+  background: var(--pf-accent-ink);
+  border-color: var(--pf-accent-ink);
 }
 .pf-btn-outline {
   background: var(--pf-paper);

@@ -73,8 +73,34 @@ const VERIFIED: Readonly<Record<string, number>> = {
   "australian-national-university-anu": 6,
 };
 
+/**
+ * The verified domains per institution — the hosts whose pages a reviewer accepted.
+ *
+ * Separate from the count above because they measure different things, and conflating
+ * them would misreport both: ANU has three verified *domains* and six approved
+ * *responsibility sources* (several responsibilities are served from one host). Both
+ * numbers are the live verification state.
+ *
+ * These are rendered as links, so they are the closest thing the search result can
+ * honestly offer: not "here is the page this figure came from" -- no figure is
+ * published yet -- but "here are the origins this institution's data will come from,
+ * and they have been checked". The per-page citation with its snapshot and reviewer
+ * belongs on the dossier, next to the figure it supports.
+ */
+const VERIFIED_DOMAINS: Readonly<Record<string, readonly string[]>> = {
+  "australian-national-university-anu": [
+    "www.anu.edu.au",
+    "study.anu.edu.au",
+    "programsandcourses.anu.edu.au",
+  ],
+};
+
 export function verifiedSourceCount(slug: string): number {
   return VERIFIED[slug] ?? 0;
+}
+
+export function verifiedDomains(slug: string): readonly string[] {
+  return VERIFIED_DOMAINS[slug] ?? [];
 }
 
 export type VerificationState = "verified" | "pending";

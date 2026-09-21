@@ -1,14 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Crest } from "@/components/platform/crest";
-import { MastheadPlate } from "@/components/platform/masthead-plate";
+import mastheadLibrary from "@/components/platform/masthead-library.jpg";
 import {
   type SortKey,
   type VerificationState,
   destinationLabel,
   search,
-  source,
   total,
+  verifiedDomains,
   verifiedSourceCount,
 } from "@/lib/catalogue/catalogue";
 import { DEFAULT_LOCALE, type Locale, parseLocale, t } from "@/lib/i18n";
@@ -133,16 +134,13 @@ export default async function CataloguePage({
       <section className="pf-masthead">
         <div className="pf-masthead-body">
           <h1>{copy.title}</h1>
-          <p className="pf-colophon">
-            {copy.colophonCount(total)} {copy.colophonRank}
-          </p>
-          <p className="pf-colophon">
-            {copy.colophonSource(source.upstream, source.publishedAt)}
-          </p>
         </div>
+        {/* Decorative, hence the empty alt: it carries no information the page does
+            not already state in words, and announcing it would only interrupt. It is
+            an edge plate rather than a hero behind the search box -- search lives in
+            the rail, and the catalogue is the first thing you see. */}
         <div className="pf-plate">
-          <MastheadPlate />
-          <span className="pf-plate-note">{copy.platePlaceholder}</span>
+          <Image src={mastheadLibrary} alt="" fill sizes="292px" priority />
         </div>
       </section>
 
@@ -209,33 +207,11 @@ export default async function CataloguePage({
             </div>
           </fieldset>
 
-          {/* Programme-level facets are named but inert: there are no published
-              programmes, and a filter that silently returns everything is worse
-              than one that says it is not ready. */}
-          <fieldset className="pf-facet" aria-describedby="pf-inert">
-            <legend>{copy.level}</legend>
-            <div className="pf-facet-list">
-              {[copy.levelBachelor, copy.levelMaster, copy.levelPhd, copy.levelFoundation].map(
-                (label) => (
-                  <span key={label} className="pf-check" style={{ color: "#8a9490" }}>
-                    <input type="checkbox" disabled />
-                    <span className="pf-check-label">{label}</span>
-                    <span className="pf-count" style={{ color: "#a8a197" }}>
-                      —
-                    </span>
-                  </span>
-                ),
-              )}
-            </div>
-          </fieldset>
-
-          <p className="pf-notice" id="pf-inert">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a5a12" strokeWidth="1.9" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" />
-              <path d="M12 8h.01M12 11v5" strokeLinecap="round" />
-            </svg>
-            <span>{copy.inertNote}</span>
-          </p>
+          {/* A disabled Level facet used to sit here, with a note explaining that its
+              counts would arrive once programme data was published. A control that
+              cannot be operated is not a feature that is coming -- it reads as a
+              broken checkbox, and it was reported as one. It returns when there are
+              programmes to filter. */}
         </aside>
 
         <section className="pf-results">
@@ -360,19 +336,42 @@ export default async function CataloguePage({
                         <span lang="en">{institution.country}</span>
                       </span>
 
+                      {/* The verified domains, as links to the origins themselves.
+                          This replaced a line ending "snapshot [ DATE ] · approved by
+                          [ REVIEWER ]" -- placeholders that were never going to be
+                          filled here, because a snapshot and a reviewer belong to a
+                          published figure and this card shows none. What is true at
+                          this level is which origins were checked, so that is what it
+                          links to. */}
                       <div className="pf-prov">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b736f" strokeWidth="1.9" aria-hidden="true">
                           <rect x="3" y="4" width="18" height="16" rx="1.5" />
                           <path d="M3 9h18M8 13h8" strokeLinecap="round" />
                         </svg>
-                        <span className="pf-prov-text">
-                          {verified ? copy.provVerified : copy.provPending}
-                        </span>
+                        {verified ? (
+                          <span className="pf-prov-text">
+                            <span className="pf-prov-label">{copy.sourcesLabel}</span>
+                            {verifiedDomains(institution.slug).map((host) => (
+                              <a
+                                key={host}
+                                className="pf-src"
+                                href={`https://${host}/`}
+                                lang="en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {host}
+                              </a>
+                            ))}
+                          </span>
+                        ) : (
+                          <span className="pf-prov-text">{copy.provPending}</span>
+                        )}
                       </div>
                     </div>
                     <div className="pf-result-actions">
                       <Link className="pf-btn pf-btn-solid" href={dossier}>
-                        {copy.viewDossier}
+                        {copy.moreDetail}
                       </Link>
                     </div>
                   </div>

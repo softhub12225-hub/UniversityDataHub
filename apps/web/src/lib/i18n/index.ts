@@ -58,10 +58,6 @@ export interface Messages {
   readonly toggleLabel: string;
 
   readonly title: string;
-  readonly colophonCount: (n: number) => string;
-  readonly colophonRank: string;
-  readonly colophonSource: (upstream: string, date: string) => string;
-  readonly platePlaceholder: string;
 
   readonly filters: string;
   readonly clear: string;
@@ -70,12 +66,6 @@ export interface Messages {
   readonly pending: string;
   readonly verificationNote: string;
   readonly destination: string;
-  readonly level: string;
-  readonly levelBachelor: string;
-  readonly levelMaster: string;
-  readonly levelPhd: string;
-  readonly levelFoundation: string;
-  readonly inertNote: string;
 
   readonly scopeInstitutions: string;
   readonly scopeProgrammes: string;
@@ -88,8 +78,8 @@ export interface Messages {
   readonly apply: string;
 
   readonly verifiedSources: (n: number) => string;
-  readonly viewDossier: string;
-  readonly provVerified: string;
+  readonly moreDetail: string;
+  readonly sourcesLabel: string;
   readonly provPending: string;
   readonly noResults: (n: number) => string;
   readonly showAll: string;
@@ -152,10 +142,6 @@ const zh: Messages = {
   toggleLabel: "切换到英文",
 
   title: "院校检索",
-  colophonCount: (n) => `收录 QS 2027 全球排名 ≤ 500 中位于 8 个指定地区的 ${n} 所院校。`,
-  colophonRank: "名次仅用于确定收录范围，页面不展示排名数值或综合得分。",
-  colophonSource: (upstream, date) => `数据来源：${upstream}（${date} 发布）`,
-  platePlaceholder: "[ 占位图 ]",
 
   filters: "筛选条件",
   clear: "清除",
@@ -165,12 +151,6 @@ const zh: Messages = {
   verificationNote:
     "「已核验」指该院校的官网来源已由审核人确认。平台不以第三方聚合数据填补空缺。",
   destination: "目的地",
-  level: "学位层次",
-  levelBachelor: "本科 Bachelor",
-  levelMaster: "硕士 Master",
-  levelPhd: "博士 PhD",
-  levelFoundation: "预科 Foundation",
-  inertNote: "灰色筛选项的计数将在专业数据发布后出现。无排名筛选项：排名数据未获授权展示。",
 
   scopeInstitutions: "院校",
   scopeProgrammes: "专业",
@@ -184,10 +164,9 @@ const zh: Messages = {
   apply: "应用",
 
   verifiedSources: (n) => `已核验 ${n} 项来源`,
-  viewDossier: "查看档案",
-  provVerified:
-    "来源 anu.edu.au · study.anu.edu.au · programsandcourses.anu.edu.au — 快照 [ 日期 ] · 核验人 [ 姓名 ]",
-  provPending: "已入库，尚未开始来源核验 — 因此不展示任何具体数值",
+  moreDetail: "查看详情",
+  sourcesLabel: "官方来源",
+  provPending: "已入库，尚未开始来源核验",
   noResults: () => "没有符合条件的院校。请调整筛选条件，或",
   showAll: "查看全部",
 
@@ -256,11 +235,6 @@ const en: Messages = {
   toggleLabel: "Switch to Chinese",
 
   title: "Institution search",
-  colophonCount: (n) =>
-    `${n} institutions, drawn from QS 2027 world rank ≤ 500 across eight destinations.`,
-  colophonRank: "Rank selects the catalogue only; no rank or overall score is shown here.",
-  colophonSource: (upstream, date) => `Source: ${upstream} (published ${date})`,
-  platePlaceholder: "[ PLACEHOLDER IMAGE ]",
 
   filters: "Filters",
   clear: "Clear",
@@ -270,13 +244,6 @@ const en: Messages = {
   verificationNote:
     "“Verified” means a reviewer has confirmed this institution's own pages as the source. Nothing is filled in from third-party aggregators.",
   destination: "Destination",
-  level: "Level",
-  levelBachelor: "Bachelor",
-  levelMaster: "Master",
-  levelPhd: "PhD",
-  levelFoundation: "Foundation",
-  inertNote:
-    "Counts on the greyed filters appear once programme data is published. There is no rank filter: rank is not licensed for display.",
 
   scopeInstitutions: "Institutions",
   scopeProgrammes: "Programmes",
@@ -289,10 +256,9 @@ const en: Messages = {
   apply: "Apply",
 
   verifiedSources: (n) => `${n} sources verified`,
-  viewDossier: "View dossier",
-  provVerified:
-    "Sources anu.edu.au · study.anu.edu.au · programsandcourses.anu.edu.au — snapshot [ DATE ] · approved by [ REVIEWER ]",
-  provPending: "In the catalogue; source verification has not started — so no figures are shown",
+  moreDetail: "More Detail",
+  sourcesLabel: "Official sources",
+  provPending: "In the catalogue; source verification has not started",
   noResults: () => "No institutions match these filters. Adjust them, or",
   showAll: "see all",
 

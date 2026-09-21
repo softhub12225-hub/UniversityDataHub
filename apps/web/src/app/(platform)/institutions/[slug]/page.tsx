@@ -2,7 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Crest } from "@/components/platform/crest";
-import { bySlug, destinationLabel, verifiedSourceCount } from "@/lib/catalogue/catalogue";
+import {
+  bySlug,
+  destinationLabel,
+  verifiedDomains,
+  verifiedSourceCount,
+} from "@/lib/catalogue/catalogue";
 import { DEFAULT_LOCALE, type Locale, parseLocale, t } from "@/lib/i18n";
 
 /**
@@ -197,16 +202,25 @@ export default async function InstitutionPage({
             <span className="pf-eyebrow">{copy.verifiedDomains}</span>
             {verified ? (
               <>
-                {["www.anu.edu.au", "study.anu.edu.au", "programsandcourses.anu.edu.au"].map(
-                  (host) => (
-                    <span key={host} className="pf-rail-line">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7fc2a3" strokeWidth="3" aria-hidden="true">
-                        <path d="m20 6-11 11-5-5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <span lang="en">{host}</span>
-                    </span>
-                  ),
-                )}
+                {/* From the catalogue, not a literal repeated here: the search result
+                    card renders the same list, and two copies would eventually
+                    disagree about which domains were verified. */}
+                {verifiedDomains(slug).map((host) => (
+                  <span key={host} className="pf-rail-line">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7fc2a3" strokeWidth="3" aria-hidden="true">
+                      <path d="m20 6-11 11-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <a
+                      className="pf-src"
+                      href={`https://${host}/`}
+                      lang="en"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {host}
+                    </a>
+                  </span>
+                ))}
                 <span className="pf-rail-small">{copy.domainsNote}</span>
               </>
             ) : (
