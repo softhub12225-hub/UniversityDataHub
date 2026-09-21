@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A new push supersedes an in-flight run for the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PNPM_VERSION: "9.15.4"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  frontend:
+    name: Console (lint, typecheck, test, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          # .node-version is the single source of truth, shared with local dev
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Type-check
+        run: pnpm run typecheck
+
+      - name: Test
+        run: pnpm --filter @datahub/web run test
+
+      - name: Build
+        env:
+          # Server-only configuration is read at request time, but the build needs a
+          # syntactically valid value for any module evaluated during prerender.
+          API_BASE_URL: http://localhost:8000
+          NEXT_PUBLIC_APP_ENV: ci
+        run: pnpm --filter @datahub/web run build
+
+  # ---------------------------------------------------------------------------
+  docker:
+    name: Image builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      # Build only -- no registry push and no deployment at this stage.
+      - name: Build web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/docker/web.Dockerfile
+          push: false
+          load: false
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+
+# ---------------------------------------------------------------------------
+# WHAT THIS CI NO LONGER CHECKS, AND WHY
+# ---------------------------------------------------------------------------
+# The monorepo had a third job, `api-contract`, which regenerated
+# packages/api-types from the live FastAPI app and failed if the committed
+# openapi.json or schema.d.ts had drifted. It needed both halves of the codebase in
+# one checkout, so splitting the repositories removed it.
+#
+# The generated files are still committed here, and scripts/generate-api-types.mjs
+# still works -- but it spawns `uv` against the API source, so it now needs the
+# backend repository checked out alongside this one. See README.md. Until a
+# cross-repository check exists, drift between the console's types and the API's
+# actual contract is caught by `pnpm run typecheck` only where the console reads a
+# field that the types no longer describe.

@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Secrets -- never commit
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------------------------------------------------------------------------
+# Node
+# ---------------------------------------------------------------------------
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# ---------------------------------------------------------------------------
+# Editors / OS
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# NOT ignored, on purpose:
+#   pnpm-lock.yaml                   -- reproducible installs
+#   packages/api-types/openapi.json  -- generated from the FastAPI app, committed so
+#   packages/api-types/src/schema.d.ts  a checkout of this repo alone can build.
+#                                       Regenerating needs the backend repository
+#                                       too, so drift is no longer CI-detectable
+#                                       here -- see .github/workflows/ci.yml.
+# ---------------------------------------------------------------------------
