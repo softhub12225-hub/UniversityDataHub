@@ -61,6 +61,21 @@
   flex-direction: column;
 }
 
+/* The default for an inline link in prose.
+ *
+ * SPECIFICITY NOTE, AND IT MATTERS MORE THAN IT LOOKS
+ * ===================================================
+ * `.pf a` is one class plus one element, so it outranks any rule written with a
+ * single class -- whatever the order in this file. Every component that renders as an
+ * anchor (button, pager, chip, source link) therefore has to state its colour with at
+ * least two classes, `.pf .pf-x`, or this rule silently wins and paints it oxblood.
+ *
+ * That is not hypothetical. It went unnoticed while the primary button was near-black,
+ * because oxblood-on-black is merely poor contrast. The moment the button became
+ * oxblood the text and the background were the same colour and it disappeared
+ * completely -- reported as "I can't see button name on button". The bug was always
+ * here; changing the background only made it visible, which is to say invisible.
+ */
 .pf a {
   color: var(--pf-accent);
 }
@@ -394,7 +409,7 @@
   gap: 7px;
   flex-wrap: wrap;
 }
-.pf-chip {
+.pf .pf-chip {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -405,7 +420,7 @@
   color: var(--pf-ink);
   text-decoration: none;
 }
-.pf-chip-verified {
+.pf .pf-chip-verified {
   background: var(--pf-verified-bg);
   border-color: var(--pf-verified-rule);
   color: var(--pf-verified);
@@ -531,13 +546,13 @@
 /* Underlined because they leave the site, and a bare colour change is not enough on
    its own to say "link". These are the one place on the card where a hover response
    is right: they go somewhere external, and that is worth confirming before a click. */
-.pf-src {
+.pf .pf-src {
   color: var(--pf-ink-2);
   text-decoration: underline;
   text-decoration-color: var(--pf-rule);
   text-underline-offset: 2px;
 }
-.pf-src:hover {
+.pf .pf-src:hover {
   color: var(--pf-accent);
   text-decoration-color: var(--pf-accent);
 }
@@ -562,21 +577,21 @@
    what every link on the page uses, so the primary button now matches rather than
    competes. Hover darkens rather than switching hue: the affordance is confirmed,
    not restated. */
-.pf-btn-solid {
+.pf .pf-btn-solid {
   background: var(--pf-accent);
   color: #fff;
   border: 1.5px solid var(--pf-accent);
 }
-.pf-btn-solid:hover {
+.pf .pf-btn-solid:hover {
   background: var(--pf-accent-ink);
   border-color: var(--pf-accent-ink);
 }
-.pf-btn-outline {
+.pf .pf-btn-outline {
   background: var(--pf-paper);
   color: var(--pf-ink);
   border: 1.5px solid var(--pf-ink);
 }
-.pf-btn-outline:hover {
+.pf .pf-btn-outline:hover {
   background: var(--pf-ground);
 }
 
@@ -594,7 +609,7 @@
   font-size: 12.5px;
   color: var(--pf-ink-3);
 }
-.pf-page {
+.pf .pf-page {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -610,13 +625,13 @@
   color: var(--pf-ink);
   text-decoration: none;
 }
-.pf-page-on {
+.pf .pf-page-on {
   border: 1.5px solid var(--pf-ink);
   background: var(--pf-ink);
   color: var(--pf-paper);
   font-weight: 600;
 }
-.pf-page-off {
+.pf .pf-page-off {
   color: #a8a197;
   background: #faf8f1;
   border-color: #e0dacb;
