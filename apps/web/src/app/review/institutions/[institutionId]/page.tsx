@@ -199,7 +199,7 @@ export default function InstitutionPage({
       ) : null}
 
       {tab === "Responsibilities" ? (
-        <div className="rv-page">
+        <div className="rv-stack">
           <p className="rv-sub">
             Registration asserts only that this URL is a candidate for this responsibility.
             The earlier pilot-source decision is <strong>not</strong> carried across.

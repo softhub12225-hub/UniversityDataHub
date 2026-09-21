@@ -262,7 +262,7 @@ export default function CandidatesPage({
         </p>
       </Panel>
 
-      <div className="rv-page">
+      <div className="rv-stack">
         {queue.candidates.length === 0 ? (
           <Empty>No candidates match these filters.</Empty>
         ) : (
