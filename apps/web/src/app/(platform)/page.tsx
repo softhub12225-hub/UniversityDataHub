@@ -1,18 +1,20 @@
 import Link from "next/link";
 
-import { MastheadPlate } from "@/components/platform/masthead-plate";
 import { Crest } from "@/components/platform/crest";
+import { MastheadPlate } from "@/components/platform/masthead-plate";
 import {
   type SortKey,
   type VerificationState,
+  destinationLabel,
   search,
   source,
   total,
   verifiedSourceCount,
 } from "@/lib/catalogue/catalogue";
+import { DEFAULT_LOCALE, type Locale, parseLocale, t } from "@/lib/i18n";
 
 /**
- * 院校检索 — the platform's front door.
+ * 院校检索 / Institution search — the platform's front door.
  *
  * WHY THE CATALOGUE IS THE HOME PAGE
  * ==================================
@@ -23,20 +25,15 @@ import {
  *
  * WHY EVERY CONTROL IS A LINK OR A PLAIN FORM
  * ===========================================
- * Filters are `<a href>`, search is a GET form, and this is a server component. The
- * URL is therefore the entire state: every result set is linkable and reloadable, the
- * count in the header is computed by the same code that chose the rows, and nothing
- * can drift between what the client thinks is filtered and what the server returned.
- * It is also what the future API call looks like — query in, page plus facets out.
+ * Filters are `<a href>`, search and sort are GET forms, and this is a server
+ * component. The URL is therefore the entire state — including the language — so every
+ * result set is linkable and reloadable, the count in the header is computed by the
+ * same code that chose the rows, and nothing can drift between what the client thinks
+ * is filtered and what the server returned. It is also what the future API call looks
+ * like: query in, page plus facets out.
  */
 
 export const dynamic = "force-dynamic";
-
-const SORTS: readonly { value: SortKey; label: string }[] = [
-  { value: "verified", label: "已核验优先" },
-  { value: "name", label: "院校名称 A–Z" },
-  { value: "destination", label: "按目的地" },
-];
 
 type Params = Record<string, string | string[] | undefined>;
 
@@ -51,37 +48,54 @@ function one(params: Params, key: string): string {
   return (Array.isArray(raw) ? raw[0] : raw) ?? "";
 }
 
-/** A URL with one facet value toggled, and the page reset — a new filter starts at 1. */
-function toggled(params: Params, key: string, value: string): string {
+/**
+ * Rebuild the URL from the current state with `changes` applied.
+ *
+ * One builder for every control, so the locale, the query, the sort and the filters
+ * cannot be dropped by one link and kept by another — which is exactly the bug a
+ * handful of bespoke href templates produces.
+ */
+function urlFor(
+  params: Params,
+  locale: Locale,
+  changes: {
+    toggleDest?: string;
+    toggleState?: string;
+    clearQuery?: boolean;
+    page?: number;
+  } = {},
+): string {
   const next = new URLSearchParams();
-  const q = one(params, "q");
+
+  const q = changes.clearQuery ? "" : one(params, "q");
   if (q) next.set("q", q);
+
   const sort = one(params, "sort");
   if (sort) next.set("sort", sort);
 
-  for (const facet of ["dest", "state"]) {
-    const current = many(params, facet);
-    const updated =
-      facet === key
-        ? current.includes(value)
-          ? current.filter((item) => item !== value)
-          : [...current, value]
-        : current;
-    for (const item of updated) next.append(facet, item);
-  }
-  const query = next.toString();
-  return query ? `/?${query}` : "/";
-}
+  const destinations = many(params, "dest");
+  const updatedDest = changes.toggleDest
+    ? destinations.includes(changes.toggleDest)
+      ? destinations.filter((item) => item !== changes.toggleDest)
+      : [...destinations, changes.toggleDest]
+    : destinations;
+  for (const item of updatedDest) next.append("dest", item);
 
-function atPage(params: Params, page: number): string {
-  const next = new URLSearchParams();
-  const q = one(params, "q");
-  if (q) next.set("q", q);
-  const sort = one(params, "sort");
-  if (sort) next.set("sort", sort);
-  for (const item of many(params, "dest")) next.append("dest", item);
-  for (const item of many(params, "state")) next.append("state", item);
+  const states = many(params, "state");
+  const updatedState = changes.toggleState
+    ? states.includes(changes.toggleState)
+      ? states.filter((item) => item !== changes.toggleState)
+      : [...states, changes.toggleState]
+    : states;
+  for (const item of updatedState) next.append("state", item);
+
+  // A new filter always starts on page 1: keeping page 7 while narrowing the set to
+  // three results shows an empty page, which reads as "no matches".
+  const page = changes.page ?? (changes.toggleDest || changes.toggleState ? 1 : 0);
   if (page > 1) next.set("page", String(page));
+
+  if (locale !== DEFAULT_LOCALE) next.set("lang", locale);
+
   const query = next.toString();
   return query ? `/?${query}` : "/";
 }
@@ -92,6 +106,10 @@ export default async function CataloguePage({
   searchParams: Promise<Params>;
 }) {
   const params = await searchParams;
+  const locale = parseLocale(params.lang);
+  const copy = t(locale);
+  const english = locale === "en";
+
   const q = one(params, "q");
   const destinations = many(params, "dest");
   const stateFilter = many(params, "state").filter(
@@ -102,51 +120,62 @@ export default async function CataloguePage({
 
   const result = search({ q, destinations, verification: stateFilter, sort, page });
   const filtered = Boolean(q) || destinations.length > 0 || stateFilter.length > 0;
+  const [matchedBefore, matchedAfter] = copy.matched(result.matched);
+
+  const sorts: readonly { value: SortKey; label: string }[] = [
+    { value: "verified", label: copy.sortVerified },
+    { value: "name", label: copy.sortName },
+    { value: "destination", label: copy.sortDestination },
+  ];
 
   return (
     <>
       <section className="pf-masthead">
         <div className="pf-masthead-body">
-          <h1>院校检索</h1>
+          <h1>{copy.title}</h1>
           <p className="pf-colophon">
-            收录 QS 2027 全球排名 ≤ 500 中位于 8 个指定地区的 <strong>{total} 所</strong>
-            院校。名次仅用于确定收录范围，页面不展示排名数值或综合得分。
+            {copy.colophonCount(total)} {copy.colophonRank}
           </p>
           <p className="pf-colophon">
-            数据来源：{source.upstream}（{source.publishedAt} 发布）
+            {copy.colophonSource(source.upstream, source.publishedAt)}
           </p>
         </div>
         <div className="pf-plate">
           <MastheadPlate />
-          <span className="pf-plate-note">[ 占位图 ]</span>
+          <span className="pf-plate-note">{copy.platePlaceholder}</span>
         </div>
       </section>
 
       <div className="pf-body">
         <aside className="pf-facets">
           <div className="pf-facet-head">
-            <span className="pf-eyebrow">筛选条件</span>
+            <span className="pf-eyebrow">{copy.filters}</span>
             <span className="pf-hr" />
             {filtered ? (
-              <Link href="/" style={{ fontSize: "12.5px" }}>
-                清除
+              <Link
+                href={locale === DEFAULT_LOCALE ? "/" : "/?lang=en"}
+                style={{ fontSize: "12.5px" }}
+              >
+                {copy.clear}
               </Link>
             ) : null}
           </div>
 
           {/* Verification first: it is the facet no comparable platform offers. */}
           <fieldset className="pf-facet pf-facet-primary">
-            <legend>数据核验</legend>
+            <legend>{copy.verification}</legend>
             <div className="pf-facet-list">
               {result.verificationFacets.map((facet) => (
                 <Link
                   key={facet.value}
                   className="pf-check"
-                  href={toggled(params, "state", facet.value)}
+                  href={urlFor(params, locale, { toggleState: facet.value })}
                   aria-pressed={facet.selected}
                 >
                   <input type="checkbox" checked={facet.selected} readOnly tabIndex={-1} />
-                  <span className="pf-check-label">{facet.label}</span>
+                  <span className="pf-check-label">
+                    {facet.value === "verified" ? copy.verified : copy.pending}
+                  </span>
                   <span
                     className={`pf-count ${
                       facet.value === "verified" ? "pf-count-verified" : "pf-count-pending"
@@ -157,23 +186,23 @@ export default async function CataloguePage({
                 </Link>
               ))}
             </div>
-            <p className="pf-facet-note">
-              「已核验」指该院校的官网来源已由审核人确认。平台不以第三方聚合数据填补空缺。
-            </p>
+            <p className="pf-facet-note">{copy.verificationNote}</p>
           </fieldset>
 
           <fieldset className="pf-facet">
-            <legend>目的地</legend>
+            <legend>{copy.destination}</legend>
             <div className="pf-facet-list">
               {result.destinationFacets.map((facet) => (
                 <Link
                   key={facet.value}
                   className="pf-check"
-                  href={toggled(params, "dest", facet.value)}
+                  href={urlFor(params, locale, { toggleDest: facet.value })}
                   aria-pressed={facet.selected}
                 >
                   <input type="checkbox" checked={facet.selected} readOnly tabIndex={-1} />
-                  <span className="pf-check-label">{facet.label}</span>
+                  <span className="pf-check-label">
+                    {destinationLabel(facet.value, english)}
+                  </span>
                   <span className="pf-count">{facet.count}</span>
                 </Link>
               ))}
@@ -184,17 +213,19 @@ export default async function CataloguePage({
               programmes, and a filter that silently returns everything is worse
               than one that says it is not ready. */}
           <fieldset className="pf-facet" aria-describedby="pf-inert">
-            <legend>学位层次</legend>
+            <legend>{copy.level}</legend>
             <div className="pf-facet-list">
-              {["本科 Bachelor", "硕士 Master", "博士 PhD", "预科 Foundation"].map((label) => (
-                <span key={label} className="pf-check" style={{ color: "#8a9490" }}>
-                  <input type="checkbox" disabled />
-                  <span className="pf-check-label">{label}</span>
-                  <span className="pf-count" style={{ color: "#a8a197" }}>
-                    —
+              {[copy.levelBachelor, copy.levelMaster, copy.levelPhd, copy.levelFoundation].map(
+                (label) => (
+                  <span key={label} className="pf-check" style={{ color: "#8a9490" }}>
+                    <input type="checkbox" disabled />
+                    <span className="pf-check-label">{label}</span>
+                    <span className="pf-count" style={{ color: "#a8a197" }}>
+                      —
+                    </span>
                   </span>
-                </span>
-              ))}
+                ),
+              )}
             </div>
           </fieldset>
 
@@ -203,23 +234,30 @@ export default async function CataloguePage({
               <circle cx="12" cy="12" r="9" />
               <path d="M12 8h.01M12 11v5" strokeLinecap="round" />
             </svg>
-            <span>
-              灰色筛选项的计数将在专业数据发布后出现。无排名筛选项：排名数据未获授权展示。
-            </span>
+            <span>{copy.inertNote}</span>
           </p>
         </aside>
 
         <section className="pf-results">
           <div className="pf-controls">
             <div className="pf-scope">
-              <span className="pf-on">院校 {total}</span>
-              <span className="pf-off">专业 0</span>
+              <span className="pf-on">
+                {copy.scopeInstitutions} {total}
+              </span>
+              <span className="pf-off">{copy.scopeProgrammes} 0</span>
             </div>
             <span className="pf-tally">
-              {filtered ? "已筛选 · " : ""}
-              共 <strong>{result.matched}</strong> 所
+              {filtered ? copy.filteredPrefix : ""}
+              {matchedBefore}
+              <strong>{result.matched}</strong>
+              {matchedAfter}
             </span>
-            <form action="/" method="get" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+
+            <form
+              action="/"
+              method="get"
+              style={{ display: "flex", gap: "8px", alignItems: "center" }}
+            >
               {q ? <input type="hidden" name="q" value={q} /> : null}
               {destinations.map((value) => (
                 <input key={value} type="hidden" name="dest" value={value} />
@@ -227,18 +265,21 @@ export default async function CataloguePage({
               {stateFilter.map((value) => (
                 <input key={value} type="hidden" name="state" value={value} />
               ))}
+              {locale !== DEFAULT_LOCALE ? (
+                <input type="hidden" name="lang" value={locale} />
+              ) : null}
               <label htmlFor="pf-sort" style={{ fontSize: "13px", color: "#6b736f" }}>
-                排序
+                {copy.sort}
               </label>
               <select id="pf-sort" name="sort" defaultValue={sort} className="pf-select">
-                {SORTS.map((option) => (
+                {sorts.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </select>
               <button type="submit" className="pf-page">
-                应用
+                {copy.apply}
               </button>
             </form>
           </div>
@@ -246,13 +287,18 @@ export default async function CataloguePage({
           {filtered ? (
             <div className="pf-chips">
               {q ? (
-                <Link className="pf-chip" href={atPage({ ...params, q: undefined }, 1)}>
-                  「{q}」<Cross />
+                <Link className="pf-chip" href={urlFor(params, locale, { clearQuery: true })}>
+                  {english ? `“${q}”` : `「${q}」`}
+                  <Cross />
                 </Link>
               ) : null}
               {destinations.map((value) => (
-                <Link key={value} className="pf-chip" href={toggled(params, "dest", value)}>
-                  {value}
+                <Link
+                  key={value}
+                  className="pf-chip"
+                  href={urlFor(params, locale, { toggleDest: value })}
+                >
+                  {destinationLabel(value, english)}
                   <Cross />
                 </Link>
               ))}
@@ -260,9 +306,9 @@ export default async function CataloguePage({
                 <Link
                   key={value}
                   className={`pf-chip ${value === "verified" ? "pf-chip-verified" : ""}`}
-                  href={toggled(params, "state", value)}
+                  href={urlFor(params, locale, { toggleState: value })}
                 >
-                  {value === "verified" ? "已核验来源" : "待核验"}
+                  {value === "verified" ? copy.verified : copy.pending}
                   <Cross />
                 </Link>
               ))}
@@ -272,14 +318,21 @@ export default async function CataloguePage({
           {result.institutions.length === 0 ? (
             <div className="pf-empty">
               <span style={{ flexGrow: 1, fontSize: "14px", color: "#4a534f" }}>
-                没有符合条件的院校。请调整筛选条件，或
-                <Link href="/">查看全部 {total} 所</Link>。
+                {copy.noResults(total)}{" "}
+                <Link href={locale === DEFAULT_LOCALE ? "/" : "/?lang=en"}>
+                  {copy.showAll} {total}
+                </Link>
+                。
               </span>
             </div>
           ) : (
             result.institutions.map((institution) => {
               const sources = verifiedSourceCount(institution.slug);
               const verified = sources > 0;
+              const dossier =
+                locale === DEFAULT_LOCALE
+                  ? `/institutions/${institution.slug}`
+                  : `/institutions/${institution.slug}?lang=en`;
               return (
                 <article
                   key={institution.slug}
@@ -290,20 +343,21 @@ export default async function CataloguePage({
                     <Crest name={institution.name} verified={verified} />
                     <div className="pf-result-text">
                       <div className="pf-result-title">
-                        <Link href={`/institutions/${institution.slug}`} lang="en">
+                        <Link href={dossier} lang="en">
                           {institution.name}
                         </Link>
                         {verified ? (
                           <span className="pf-tag pf-tag-verified">
                             <Tick />
-                            已核验 {sources} 项来源
+                            {copy.verifiedSources(sources)}
                           </span>
                         ) : (
-                          <span className="pf-tag pf-tag-pending">待核验</span>
+                          <span className="pf-tag pf-tag-pending">{copy.pending}</span>
                         )}
                       </div>
                       <span className="pf-where">
-                        {institution.destination} · <span lang="en">{institution.country}</span>
+                        {destinationLabel(institution.destination, english)} ·{" "}
+                        <span lang="en">{institution.country}</span>
                       </span>
 
                       <div className="pf-prov">
@@ -312,15 +366,13 @@ export default async function CataloguePage({
                           <path d="M3 9h18M8 13h8" strokeLinecap="round" />
                         </svg>
                         <span className="pf-prov-text">
-                          {verified
-                            ? "来源 anu.edu.au · study.anu.edu.au · programsandcourses.anu.edu.au — 快照 [ 日期 ] · 核验人 [ 姓名 ]"
-                            : "已入库，尚未开始来源核验 — 因此不展示任何具体数值"}
+                          {verified ? copy.provVerified : copy.provPending}
                         </span>
                       </div>
                     </div>
                     <div className="pf-result-actions">
-                      <Link className="pf-btn pf-btn-solid" href={`/institutions/${institution.slug}`}>
-                        查看档案
+                      <Link className="pf-btn pf-btn-solid" href={dossier}>
+                        {copy.viewDossier}
                       </Link>
                     </div>
                   </div>
@@ -330,34 +382,33 @@ export default async function CataloguePage({
           )}
 
           {result.pages > 1 ? (
-            <nav className="pf-pager" aria-label="分页">
+            <nav className="pf-pager" aria-label={copy.sort}>
               <span className="pf-pager-tally">
-                共 {result.matched} 所 · 每页 {result.perPage} 条 · 第 {result.page} /{" "}
-                {result.pages} 页
+                {copy.pagerTally(result.matched, result.perPage, result.page, result.pages)}
               </span>
               {result.page > 1 ? (
-                <Link className="pf-page" href={atPage(params, result.page - 1)}>
-                  上一页
+                <Link className="pf-page" href={urlFor(params, locale, { page: result.page - 1 })}>
+                  {copy.prev}
                 </Link>
               ) : (
-                <span className="pf-page pf-page-off">上一页</span>
+                <span className="pf-page pf-page-off">{copy.prev}</span>
               )}
               {pageWindow(result.page, result.pages).map((number) => (
                 <Link
                   key={number}
                   className={`pf-page ${number === result.page ? "pf-page-on" : ""}`}
-                  href={atPage(params, number)}
+                  href={urlFor(params, locale, { page: number })}
                   aria-current={number === result.page ? "page" : undefined}
                 >
                   {number}
                 </Link>
               ))}
               {result.page < result.pages ? (
-                <Link className="pf-page" href={atPage(params, result.page + 1)}>
-                  下一页
+                <Link className="pf-page" href={urlFor(params, locale, { page: result.page + 1 })}>
+                  {copy.next}
                 </Link>
               ) : (
-                <span className="pf-page pf-page-off">下一页</span>
+                <span className="pf-page pf-page-off">{copy.next}</span>
               )}
             </nav>
           ) : null}

@@ -2,10 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Crest } from "@/components/platform/crest";
-import { allSlugs, bySlug, verifiedSourceCount } from "@/lib/catalogue/catalogue";
+import { bySlug, destinationLabel, verifiedSourceCount } from "@/lib/catalogue/catalogue";
+import { DEFAULT_LOCALE, type Locale, parseLocale, t } from "@/lib/i18n";
 
 /**
- * 院校档案 — one institution, and everything the platform can say about it.
+ * 院校档案 / Institution dossier — one institution, and everything the platform can
+ * honestly say about it.
  *
  * WHY MOST OF THIS PAGE IS EMPTY, ON PURPOSE
  * ==========================================
@@ -28,28 +30,44 @@ import { allSlugs, bySlug, verifiedSourceCount } from "@/lib/catalogue/catalogue
  * three 404s is what the acquisition pass actually found.
  */
 
-export function generateStaticParams() {
-  return allSlugs().map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function InstitutionPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { slug } = await params;
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
   const institution = bySlug(slug);
   if (!institution) notFound();
 
+  const locale = parseLocale(query.lang);
+  const copy = t(locale);
+  const english = locale === "en";
   const sources = verifiedSourceCount(slug);
   const verified = sources > 0;
+
+  const verifiedSourceNames = [
+    copy.srcHome,
+    copy.srcUndergrad,
+    copy.srcCatalog,
+    copy.srcLanguage,
+    copy.srcTuition,
+    copy.srcDeadline,
+  ];
+  const missingSourceNames = [copy.srcPostgrad, copy.srcPhd, copy.srcCalendar];
 
   return (
     <>
       <section className="pf-masthead">
         <div className="pf-masthead-body">
-          <Link href="/" style={{ fontSize: "12.5px", color: "#6b736f", textDecoration: "none" }}>
-            ← 返回院校检索
+          <Link
+            href={backHref(locale)}
+            style={{ fontSize: "12.5px", color: "#6b736f", textDecoration: "none" }}
+          >
+            {copy.backToSearch}
           </Link>
           <div style={{ display: "flex", alignItems: "flex-end", gap: "16px", marginTop: "12px" }}>
             <Crest name={institution.name} verified={verified} />
@@ -59,12 +77,13 @@ export default async function InstitutionPage({
               </h1>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                 <span style={{ fontSize: "14px", color: "#4a534f" }}>
-                  {institution.destination} · <span lang="en">{institution.country}</span>
+                  {destinationLabel(institution.destination, english)} ·{" "}
+                  <span lang="en">{institution.country}</span>
                 </span>
                 {verified ? (
-                  <span className="pf-tag pf-tag-verified">已核验 {sources} 项来源</span>
+                  <span className="pf-tag pf-tag-verified">{copy.verifiedSources(sources)}</span>
                 ) : (
-                  <span className="pf-tag pf-tag-pending">待核验</span>
+                  <span className="pf-tag pf-tag-pending">{copy.pending}</span>
                 )}
               </div>
             </div>
@@ -75,59 +94,59 @@ export default async function InstitutionPage({
       <div className="pf-doc">
         <div className="pf-doc-main">
           {!verified ? (
-            <p className="pf-callout pf-callout-warn">
-              <strong>该院校尚未开始来源核验。</strong>
-              院校已按 QS 2027 名单入库，但平台还没有取得其官网快照，也没有经审核人确认的数据。
-              因此本页不展示任何学费、语言要求或申请截止日期 —— 不从第三方聚合、不按往年推算。
-            </p>
+            <p className="pf-callout pf-callout-warn">{copy.notVerifiedBanner}</p>
           ) : null}
 
           <section>
             <div className="pf-section-head">
-              <h2>关键信息</h2>
-              <span className="pf-section-note">每一格下方标注其来源页面、快照日期与核验人</span>
+              <h2>{copy.keyFacts}</h2>
+              <span className="pf-section-note">{copy.keyFactsNote}</span>
             </div>
             <div className="pf-facts">
               <Fact
-                label="英语语言要求"
-                value="IELTS [ 待发布 ]"
+                label={copy.english}
+                value={`IELTS ${copy.awaitingValue}`}
                 verified={verified}
+                verifiedLabel={copy.sourceVerified}
+                pendingLabel={copy.pending}
                 provenance={
                   verified
-                    ? "study.anu.edu.au/apply/english-language-requirements · 快照 [ 日期 ] · 核验人 [ 姓名 ]"
-                    : "无已核验来源"
+                    ? "study.anu.edu.au/apply/english-language-requirements · [ snapshot ] · [ reviewer ]"
+                    : copy.noVerifiedSource
                 }
               />
               <Fact
-                label="国际生学费 / 年"
-                value="[ 待发布 ]"
+                label={copy.tuition}
+                value={copy.awaitingValue}
                 verified={verified}
+                verifiedLabel={copy.sourceVerified}
+                pendingLabel={copy.pending}
                 provenance={
                   verified
-                    ? "www.anu.edu.au · 币种以官网公布为准 · 快照 [ 日期 ] · 核验人 [ 姓名 ]"
-                    : "无已核验来源"
+                    ? "www.anu.edu.au · [ snapshot ] · [ reviewer ]"
+                    : copy.noVerifiedSource
                 }
               />
               <Fact
-                label="申请截止"
-                value="[ 待发布 ]"
+                label={copy.deadline}
+                value={copy.awaitingValue}
                 verified={verified}
+                verifiedLabel={copy.sourceVerified}
+                pendingLabel={copy.pending}
                 provenance={
                   verified
-                    ? "study.anu.edu.au · 仅采用官网公布日期，不按往年推算 · 快照 [ 日期 ]"
-                    : "无已核验来源"
+                    ? "study.anu.edu.au · [ snapshot ] · [ reviewer ]"
+                    : copy.noVerifiedSource
                 }
               />
               {verified ? (
                 <div className="pf-fact pf-fact-pending">
                   <div className="pf-fact-label">
-                    <span>研究生入学</span>
-                    <span className="pf-tag pf-tag-pending">无可用来源</span>
+                    <span>{copy.postgraduate}</span>
+                    <span className="pf-tag pf-tag-pending">{copy.noSource}</span>
                   </div>
-                  <span className="pf-fact-value pf-fact-value-pending">暂不展示</span>
-                  <span className="pf-fact-prov">
-                    所提交页面返回 HTTP 404，无快照可读。此处留空，不以其他页面推测填补。
-                  </span>
+                  <span className="pf-fact-value pf-fact-value-pending">{copy.notShown}</span>
+                  <span className="pf-fact-prov">{copy.notShownWhy}</span>
                 </div>
               ) : null}
             </div>
@@ -135,8 +154,8 @@ export default async function InstitutionPage({
 
           <section>
             <div className="pf-section-head">
-              <h2>入学要求</h2>
-              <span className="pf-section-note">「适用对象」为本平台强制字段</span>
+              <h2>{copy.requirements}</h2>
+              <span className="pf-section-note">{copy.requirementsNote}</span>
             </div>
             <table
               style={{
@@ -148,34 +167,34 @@ export default async function InstitutionPage({
             >
               <thead>
                 <tr>
-                  <Th>项目</Th>
-                  <Th>数值</Th>
-                  <Th>适用对象</Th>
-                  <Th>来源</Th>
+                  <Th>{copy.colItem}</Th>
+                  <Th>{copy.colValue}</Th>
+                  <Th>{copy.colAppliesTo}</Th>
+                  <Th>{copy.colSource}</Th>
                 </tr>
               </thead>
               <tbody>
-                {["IELTS 总分", "TOEFL iBT", "学历要求"].map((item) => (
+                {[copy.reqIelts, copy.reqToefl, copy.reqAcademic].map((item) => (
                   <tr key={item}>
                     <Td strong>{item}</Td>
-                    <Td>[ 待发布 ]</Td>
-                    <Td muted>[ 待人工判定 ]</Td>
+                    <Td>{copy.awaitingValue}</Td>
+                    <Td muted>{copy.pendingScope}</Td>
                     <Td>{verified ? "study.anu.edu.au" : "—"}</Td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <p className="pf-callout">
-              页面若写明某项要求只适用于特定申请人，即按原文标注。
-              <strong>未写明适用对象的要求，不会被当作「适用所有人」</strong>
-              —— 这是与聚合类平台最根本的差别。
+              {copy.scopeCallout[0]}
+              <strong>{copy.scopeCallout[1]}</strong>
+              {copy.scopeCallout[2]}
             </p>
           </section>
         </div>
 
         <aside className="pf-doc-rail">
           <div className="pf-rail-card">
-            <span className="pf-eyebrow">已核验官方域名</span>
+            <span className="pf-eyebrow">{copy.verifiedDomains}</span>
             {verified ? (
               <>
                 {["www.anu.edu.au", "study.anu.edu.au", "programsandcourses.anu.edu.au"].map(
@@ -188,14 +207,10 @@ export default async function InstitutionPage({
                     </span>
                   ),
                 )}
-                <span className="pf-rail-small">
-                  页面只有在其域名先通过院校归属核验后，才可被引用。
-                </span>
+                <span className="pf-rail-small">{copy.domainsNote}</span>
               </>
             ) : (
-              <span className="pf-rail-small">
-                尚无已核验域名。核验须先确认某主机确实归该院校所有或获其正式授权。
-              </span>
+              <span className="pf-rail-small">{copy.noDomains}</span>
             )}
           </div>
 
@@ -203,24 +218,17 @@ export default async function InstitutionPage({
             <div className="pf-list-card">
               <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
                 <span className="pf-eyebrow" style={{ flexGrow: 1 }}>
-                  来源清单
+                  {copy.sourceList}
                 </span>
                 <span style={{ fontSize: "12.5px", color: "#4a534f" }}>6 / 9</span>
               </div>
-              {[
-                "院校首页",
-                "本科入学",
-                "专业目录",
-                "语言要求",
-                "学费与费用",
-                "申请截止",
-              ].map((label) => (
+              {verifiedSourceNames.map((label) => (
                 <span key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
                   <span className="pf-dot pf-dot-on" />
                   <span style={{ flexGrow: 1, fontSize: "13px" }}>{label}</span>
                 </span>
               ))}
-              {["研究生入学", "博士入学", "学术日历"].map((label) => (
+              {missingSourceNames.map((label) => (
                 <span key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
                   <span className="pf-dot pf-dot-off" />
                   <span style={{ flexGrow: 1, fontSize: "13px", color: "#6b736f" }}>{label}</span>
@@ -235,15 +243,23 @@ export default async function InstitutionPage({
   );
 }
 
+function backHref(locale: Locale): string {
+  return locale === DEFAULT_LOCALE ? "/" : "/?lang=en";
+}
+
 function Fact({
   label,
   value,
   verified,
+  verifiedLabel,
+  pendingLabel,
   provenance,
 }: {
   label: string;
   value: string;
   verified: boolean;
+  verifiedLabel: string;
+  pendingLabel: string;
   provenance: string;
 }) {
   return (
@@ -251,9 +267,9 @@ function Fact({
       <div className="pf-fact-label">
         <span>{label}</span>
         {verified ? (
-          <span className="pf-tag pf-tag-verified">来源已核验</span>
+          <span className="pf-tag pf-tag-verified">{verifiedLabel}</span>
         ) : (
-          <span className="pf-tag pf-tag-pending">待核验</span>
+          <span className="pf-tag pf-tag-pending">{pendingLabel}</span>
         )}
       </div>
       <span className={`pf-fact-value ${verified ? "" : "pf-fact-value-pending"}`}>{value}</span>

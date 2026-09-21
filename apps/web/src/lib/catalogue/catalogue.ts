@@ -130,6 +130,29 @@ const DESTINATION_ORDER: readonly string[] = [
   "中国澳门",
 ];
 
+/**
+ * The English label for a destination.
+ *
+ * Facets key on the destination exactly as the client's workbook spells it, in
+ * Chinese, because that string is the filter value and must survive round-tripping
+ * through the URL unchanged. The English side of the interface still has to render
+ * it, so the pairing lives here rather than being re-derived per institution.
+ */
+const DESTINATION_EN: Readonly<Record<string, string>> = {
+  美国: "United States",
+  英国: "United Kingdom",
+  澳大利亚: "Australia",
+  加拿大: "Canada",
+  新西兰: "New Zealand",
+  中国香港: "Hong Kong SAR",
+  新加坡: "Singapore",
+  中国澳门: "Macao SAR",
+};
+
+export function destinationLabel(name: string, english: boolean): string {
+  return english ? (DESTINATION_EN[name] ?? name) : name;
+}
+
 function matchesText(institution: Institution, q: string): boolean {
   if (!q) return true;
   const needle = q.trim().toLowerCase();
