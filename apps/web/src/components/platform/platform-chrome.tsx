@@ -68,13 +68,12 @@ export function PlatformChrome({
         </form>
 
         <nav className="pf-railnav">
+          {/* System status and the reviewer console used to sit here. Both are
+              internal: one is an operations dashboard, the other needs an account an
+              administrator has to issue. Putting them in the public header advertised
+              two doors nobody visiting this site can open. The console is still
+              reachable -- Sign in, below, goes straight to it. */}
           <Link href={href("/", locale)}>{copy.navInstitutions}</Link>
-          <Link className="pf-quiet" href={href("/system-status", locale)}>
-            {copy.navStatus}
-          </Link>
-          <Link className="pf-quiet" href="/review">
-            {copy.navConsole}
-          </Link>
 
           {/* The toggle sits between the navigation and the sign-in call to action:
               a language switch is a property of the whole interface, so it belongs in

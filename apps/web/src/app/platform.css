@@ -363,6 +363,21 @@
   line-height: 1.15;
   color: var(--pf-ink);
 }
+/* Caps, on the search title ONLY.
+ *
+ * Deliberately not on `.pf-masthead h1`, which the dossier also uses -- and the
+ * dossier's heading is the institution's official name as QS publishes it. Shouting
+ * AUSTRALIAN NATIONAL UNIVERSITY would not just look wrong, it would misstate a name
+ * on a platform whose whole claim is that it reproduces sources faithfully.
+ *
+ * The negative tracking above is for lowercase; caps need the opposite, or the
+ * letters crowd. Chinese is unaffected either way -- `text-transform` has nothing to
+ * do in a script with no letter case, so 院校检索 renders exactly as before. */
+.pf-masthead-title {
+  text-transform: uppercase;
+  font-size: 27px;
+  letter-spacing: 0.055em;
+}
 .pf-plate {
   width: 292px;
   flex-shrink: 0;
@@ -661,7 +676,10 @@
   gap: 11px;
   flex-wrap: wrap;
 }
-.pf-result-title a {
+/* Two classes so the rule cannot be shadowed, and `text-decoration` spelled out
+   rather than left to the default. The stylesheet has never underlined these; if a
+   line still appears under a name it is being drawn by something outside the page. */
+.pf .pf-result-title a {
   font-size: 17.5px;
   font-weight: 600;
   color: var(--pf-ink);
@@ -671,7 +689,7 @@
    error state against a list of institution names, and every row already carries a
    More Detail button as its affordance. Keyboard focus is still shown -- that is
    navigation, not decoration. */
-.pf-result-title a:focus-visible {
+.pf .pf-result-title a:focus-visible {
   outline: 2px solid var(--pf-accent);
   outline-offset: 2px;
 }
@@ -733,29 +751,39 @@
 .pf-prov-label {
   color: var(--pf-ink-3);
 }
-/* Underlined because they leave the site, and a bare colour change is not enough on
-   its own to say "link". These are the one place on the card where a hover response
-   is right: they go somewhere external, and that is worth confirming before a click. */
+/* No underline at rest, by request.
+ *
+ * They were underlined because a colour change alone is a weak signal for "link", and
+ * WCAG 1.4.1 is about exactly that. What makes dropping it defensible here is where
+ * they sit: not embedded in a sentence, where an unmarked link is genuinely
+ * ambiguous, but in a labelled "Official sources" row where every item is a source.
+ * Position carries the meaning the underline used to.
+ *
+ * They take the accent colour instead of ink, so they still read as interactive, and
+ * the underline returns on hover and on keyboard focus -- confirmation before a click
+ * that leaves the site, which is the one place on the card a hover response earns
+ * itself. */
 .pf .pf-src {
-  color: var(--pf-ink-2);
-  text-decoration: underline;
-  text-decoration-color: var(--pf-rule);
+  color: var(--pf-accent);
+  text-decoration: none;
   text-underline-offset: 2px;
 }
-.pf .pf-src:hover {
-  color: var(--pf-accent);
-  text-decoration-color: var(--pf-accent);
+.pf .pf-src:hover,
+.pf .pf-src:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 /* On the dossier's night-coloured rail card that same link was ink on near-black at
    2.2:1 -- present, and effectively unreadable. Context decides the colour; the
    component only decides that it is a link. */
 .pf .pf-rail-card .pf-src {
   color: #fff;
-  text-decoration-color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
 }
-.pf .pf-rail-card .pf-src:hover {
+.pf .pf-rail-card .pf-src:hover,
+.pf .pf-rail-card .pf-src:focus-visible {
   color: var(--pf-sand);
-  text-decoration-color: var(--pf-sand);
+  text-decoration: underline;
 }
 
 .pf-btn {

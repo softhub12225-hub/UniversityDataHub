@@ -134,7 +134,10 @@ export default async function CataloguePage({
     <>
       <section className="pf-masthead">
         <div className="pf-masthead-body">
-          <h1>{copy.title}</h1>
+          {/* The caps treatment is on this heading only. The dossier reuses
+              `.pf-masthead` and its heading is an institution's official name, which
+              must be reproduced as published. */}
+          <h1 className="pf-masthead-title">{copy.title}</h1>
         </div>
         {/* Decorative, hence the empty alt: it carries no information the page does
             not already state in words, and announcing it would only interrupt. It is

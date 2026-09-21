@@ -51,8 +51,6 @@ export interface Messages {
   readonly searchPlaceholder: string;
   readonly searchLabel: string;
   readonly navInstitutions: string;
-  readonly navStatus: string;
-  readonly navConsole: string;
   readonly navSignIn: string;
   readonly toggleTo: string;
   readonly toggleLabel: string;
@@ -134,8 +132,6 @@ const zh: Messages = {
   searchPlaceholder: "检索院校名称、地区…",
   searchLabel: "检索院校",
   navInstitutions: "院校",
-  navStatus: "系统状态",
-  navConsole: "审核后台",
   navSignIn: "登录",
   toggleTo: "EN",
   toggleLabel: "切换到英文",
@@ -225,8 +221,6 @@ const en: Messages = {
   searchPlaceholder: "Search institutions, destinations…",
   searchLabel: "Search institutions",
   navInstitutions: "Institutions",
-  navStatus: "System status",
-  navConsole: "Reviewer console",
   navSignIn: "Sign in",
   toggleTo: "中文",
   toggleLabel: "Switch to Chinese",
