@@ -910,3 +910,67 @@
     display: none;
   }
 }
+
+
+/* ── waiting ──────────────────────────────────────────────────────────────
+ *
+ * The console reads through the BFF to Railway to Neon. A Neon compute that has
+ * scaled to zero takes seconds to answer its first request, so these screens spend
+ * real time with nothing to show -- and the thing they showed before was the word
+ * "Loading" in a dashed box, which at a glance is indistinguishable from a page that
+ * has finished and found nothing.
+ */
+
+.rv-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.rv-skel {
+  display: block;
+  border-radius: 4px;
+  background-color: #262320;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: rv-skel-sweep 1.5s ease-in-out infinite;
+}
+@keyframes rv-skel-sweep {
+  0% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -40% 0;
+  }
+}
+.rv-skel-head {
+  width: 220px;
+  height: 20px;
+  margin-bottom: 6px;
+}
+.rv-skel-row {
+  width: 100%;
+  height: 46px;
+}
+
+/* Visually hidden, still announced. The console had no such utility; the public
+   platform's `.pf-sr` is scoped to that surface and does not reach here. */
+.rv-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-skel {
+    animation: none;
+    background-image: none;
+  }
+}

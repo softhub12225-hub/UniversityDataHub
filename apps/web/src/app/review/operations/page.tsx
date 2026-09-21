@@ -17,7 +17,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Badge, Empty, ErrorText, Mono } from "@/components/review/primitives";
+import { Badge, ErrorText, Loading, Mono } from "@/components/review/primitives";
 import { reviewApi } from "@/lib/review/client";
 import type { OperationEntry } from "@/lib/review/types";
 
@@ -35,7 +35,7 @@ export default function OperationsPage() {
   }, []);
 
   if (error) return <ErrorText>{error}</ErrorText>;
-  if (!rows) return <Empty>Loading…</Empty>;
+  if (!rows) return <Loading rows={5} />;
 
   return (
     <>

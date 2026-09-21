@@ -16,7 +16,7 @@ import { use, useCallback, useEffect, useState } from "react";
 
 import { AuditTable } from "@/components/review/audit-table";
 import { EvidenceViewer } from "@/components/review/evidence-viewer";
-import { Badge, Empty, ErrorText, Mono, Panel, Stat, stateTone } from "@/components/review/primitives";
+import { Badge, Empty, ErrorText, Loading, Mono, Panel, Stat, stateTone } from "@/components/review/primitives";
 import { ResponsibilityCard } from "@/components/review/responsibility-card";
 import { reviewApi } from "@/lib/review/client";
 import type { AuditEntry, InstitutionDetail } from "@/lib/review/types";
@@ -58,7 +58,7 @@ export default function InstitutionPage({
   }, [tab, audit, institutionId]);
 
   if (error) return <ErrorText>{error}</ErrorText>;
-  if (!data) return <Empty>Loading…</Empty>;
+  if (!data) return <Loading rows={4} />;
 
   const mappingToPilot = new Map(
     data.sources.filter((row) => row.mapping_id).map((row) => [row.mapping_id!, row.pilot_source_id]),

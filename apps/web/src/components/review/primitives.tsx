@@ -110,6 +110,34 @@ export function Empty({ children }: { children: ReactNode }) {
   return <p className="rv-empty">{children}</p>;
 }
 
+/**
+ * What a console screen shows while its data is in flight.
+ *
+ * This replaced a bare `<Empty>Loading…</Empty>`, which was a dashed box with a word
+ * in it. That was fine when the API was on localhost. It is not fine now: the console
+ * reads through the BFF to Railway to Neon, and a Neon compute that has scaled to zero
+ * takes seconds to answer the first request -- long enough that a single line of text
+ * reads as a page that has finished loading and has nothing to show.
+ *
+ * `rows` should be roughly what the screen is about to render, so the real content
+ * lands in a space that is already its shape.
+ */
+export function Loading({ rows = 3, label }: { rows?: number; label?: string }) {
+  return (
+    <div className="rv-loading" aria-busy="true">
+      {/* The blocks are decoration; this is what is actually announced, and it is
+          polite so it waits for a pause rather than cutting in. */}
+      <span className="rv-sr" role="status" aria-live="polite">
+        {label ?? "Loading"}
+      </span>
+      <span className="rv-skel rv-skel-head" />
+      {Array.from({ length: rows }, (_, row) => (
+        <span key={row} className="rv-skel rv-skel-row" />
+      ))}
+    </div>
+  );
+}
+
 export function ErrorText({ children }: { children: ReactNode }) {
   return (
     <p className="rv-error" role="alert">

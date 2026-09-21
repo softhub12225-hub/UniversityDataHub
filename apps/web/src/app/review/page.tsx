@@ -15,7 +15,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { Badge, Empty, ErrorText, Mono, Panel, Stat } from "@/components/review/primitives";
+import { Badge, ErrorText, Loading, Mono, Panel, Stat } from "@/components/review/primitives";
 import { reviewApi } from "@/lib/review/client";
 import type { DashboardData } from "@/lib/review/types";
 
@@ -33,7 +33,7 @@ export default function DashboardPage() {
   }, []);
 
   if (error) return <ErrorText>{error}</ErrorText>;
-  if (!data) return <Empty>Loading…</Empty>;
+  if (!data) return <Loading rows={4} />;
 
   return (
     <>

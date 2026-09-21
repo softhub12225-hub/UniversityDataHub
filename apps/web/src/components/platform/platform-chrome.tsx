@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
+import { NavigationProgress } from "@/components/platform/navigation-progress";
 import { DEFAULT_LOCALE, HTML_LANG, type Locale, parseLocale, t } from "@/lib/i18n";
 
 /**
@@ -44,6 +45,9 @@ export function PlatformChrome({
 
   return (
     <div className={`pf ${fontClassName}`}>
+      {/* Mounted once, in the frame, so it covers every navigation on every
+          page rather than needing to be remembered per link. */}
+      <NavigationProgress />
       <header className="pf-rail">
         <Link className="pf-brand" href={href("/", locale)}>
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">

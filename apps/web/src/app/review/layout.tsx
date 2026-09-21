@@ -28,6 +28,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+import { Loading } from "@/components/review/primitives";
 import { Seal } from "@/components/review/seal";
 import { ReviewApiError, reviewApi } from "@/lib/review/client";
 import type { SessionInfo } from "@/lib/review/types";
@@ -82,9 +83,9 @@ export default function ReviewLayout({ children }: { children: React.ReactNode }
   if (!checked && !onLogin) {
     return (
       <div className="rv-page">
-        <p className="rv-empty" style={{ margin: "auto" }}>
-          Checking your session…
-        </p>
+        <div className="rv-content" style={{ maxWidth: "640px", margin: "auto" }}>
+          <Loading rows={2} label="Checking your session" />
+        </div>
       </div>
     );
   }

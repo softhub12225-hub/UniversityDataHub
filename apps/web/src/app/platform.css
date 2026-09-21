@@ -1232,3 +1232,184 @@
     display: none;
   }
 }
+
+
+/* ── waiting ──────────────────────────────────────────────────────────────
+ *
+ * Two things live here: the beam that runs while a navigation is in flight, and the
+ * skeletons the route-level `loading.tsx` files are built from.
+ *
+ * Both are the same idea as the rest of the surface -- light, arriving. The beam is
+ * literally the page's top edge coming alive: `.pf::before` draws that gradient
+ * statically, and while something is loading a brighter band travels across it.
+ */
+
+.pf-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 70;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+.pf-nav[data-active="true"] {
+  opacity: 1;
+}
+.pf-nav-beam {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--pf-dawn-2) 18%,
+    var(--pf-dawn-4) 50%,
+    var(--pf-dawn-3) 82%,
+    transparent 100%
+  );
+}
+.pf-nav[data-active="true"] .pf-nav-beam {
+  animation: pf-nav-sweep 1.15s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes pf-nav-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(460%);
+  }
+}
+
+/* The shimmer is the same light moving across a blank block. */
+.pf-skel {
+  display: block;
+  border-radius: 6px;
+  background-color: #e7e2d7;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: pf-skel-sweep 1.5s ease-in-out infinite;
+}
+@keyframes pf-skel-sweep {
+  0% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -40% 0;
+  }
+}
+/* On the dossier's night rail card the light half has to be the bright one. */
+.pf-skel-on-dark {
+  background-color: rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+/* Sizes named after what they stand in for, so a skeleton that drifts out of step
+   with the real layout is obvious when reading either file. */
+.pf-skel-title {
+  width: min(360px, 62%);
+  height: 30px;
+}
+.pf-skel-back {
+  width: 110px;
+  height: 13px;
+  margin-bottom: 12px;
+}
+.pf-skel-eyebrow {
+  width: 92px;
+  height: 11px;
+}
+.pf-skel-legend {
+  width: 140px;
+  height: 15px;
+  margin-bottom: 12px;
+}
+.pf-skel-row {
+  width: 100%;
+  height: 15px;
+  margin-top: 9px;
+}
+.pf-skel-scope {
+  width: 210px;
+  height: 36px;
+  border-radius: 999px;
+}
+.pf-skel-tally {
+  width: 140px;
+  height: 14px;
+}
+.pf-skel-crest {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: var(--pf-r-sm);
+}
+.pf-skel-crest-lg {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: var(--pf-r-sm);
+}
+.pf-skel-name {
+  width: min(320px, 70%);
+  height: 18px;
+}
+.pf-skel-where {
+  width: 180px;
+  height: 13px;
+}
+.pf-skel-prov {
+  width: min(420px, 88%);
+  height: 12px;
+  margin-top: 10px;
+}
+.pf-skel-value {
+  width: 130px;
+  height: 26px;
+}
+.pf-skel-btn {
+  width: 118px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--pf-r-sm);
+}
+.pf-skel-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.pf-skel-lockup-text {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+/* Reduced motion: the indicators stay, the movement goes. A still bar and a still
+   block both say "not ready yet", which is the whole job -- the sweep only makes it
+   pleasanter, and it is the part that causes harm. */
+@media (prefers-reduced-motion: reduce) {
+  .pf-nav[data-active="true"] .pf-nav-beam {
+    animation: none;
+    width: 100%;
+  }
+  .pf-skel {
+    animation: none;
+    background-image: none;
+  }
+}
