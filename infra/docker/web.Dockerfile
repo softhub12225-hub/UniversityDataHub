@@ -59,6 +59,10 @@ RUN apt-get update \
 WORKDIR /app
 
 # `output: "standalone"` emits a self-contained server plus a minimal node_modules.
+# It does NOT include `.next/static` or `public/`, which is why both are copied
+# separately. `public/` is committed with a .gitkeep even while it is empty: COPY
+# fails the build when its source is missing, and git does not track empty
+# directories, so deleting the placeholder breaks the image rather than the app.
 COPY --from=builder --chown=app:app /repo/apps/web/.next/standalone ./
 COPY --from=builder --chown=app:app /repo/apps/web/.next/static ./apps/web/.next/static
 COPY --from=builder --chown=app:app /repo/apps/web/public ./apps/web/public

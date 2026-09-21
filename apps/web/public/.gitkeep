@@ -1,0 +1,20 @@
+# Keeps `public/` in the repository although it is empty.
+#
+# WHY AN EMPTY DIRECTORY IS LOAD-BEARING
+# ======================================
+# `next build` with `output: "standalone"` does NOT copy `public/` into
+# `.next/standalone`, so the production image has to copy it separately --
+# infra/docker/web.Dockerfile does exactly that. Docker's COPY fails the build when
+# its source does not exist, and git does not track empty directories, so without
+# this file the image build fails with:
+#
+#   "/repo/apps/web/public": not found
+#
+# which is what happened the first time CI actually ran the docker job.
+#
+# The alternative was to delete the COPY line. That would work today and break the
+# day somebody adds a favicon: the file would be committed, served in development,
+# and silently missing in production. An empty directory is the cheaper mistake.
+#
+# Anything dropped in here is served from the site root, publicly and unauthenticated.
+# Never put evidence artifacts or anything reviewer-specific here.
