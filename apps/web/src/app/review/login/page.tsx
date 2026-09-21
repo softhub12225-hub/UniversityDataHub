@@ -1,5 +1,5 @@
 /**
- * Reviewer login.
+ * Reviewer sign-in.
  *
  * The password goes into one fetch and is never stored, never put in a URL, never logged
  * and never held in state beyond the submit. The response carries no token for script to
@@ -9,15 +9,31 @@
  * Failures are reported with the backend's own message, which is deliberately identical
  * for "no such account" and "wrong password" -- distinguishing them here would rebuild the
  * account-enumeration oracle the backend refuses to be.
+ *
+ * WHY THE LEFT PANEL SAYS WHAT IT SAYS
+ * ====================================
+ * A sign-in screen for an internal tool is the one page an outsider can always reach, so
+ * it is also the page that has to be honest about what is behind it. The three lines are
+ * the console's actual guarantees -- verification before publication, a named reviewer on
+ * every decision, an append-only audit trail -- not a value proposition. And it states
+ * that accounts come from an administrator, because there is no self sign-up endpoint and
+ * a visitor hunting for one should be told rather than left looking.
  */
 
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { ErrorText } from "@/components/review/primitives";
+import { Seal } from "@/components/review/seal";
 import { reviewApi } from "@/lib/review/client";
+
+const ASSURANCES: readonly string[] = [
+  "No figure is published without a verified official source.",
+  "Every decision is recorded against the reviewer who made it.",
+  "The evidence trail is append-only and can be read back in full.",
+];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -44,13 +60,33 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="rv-login">
-      <section className="rv-panel">
-        <h1 style={{ fontSize: "1.2rem", margin: "0 0 0.25rem" }}>Reviewer console</h1>
-        <p className="rv-sub" style={{ marginBottom: "1rem" }}>
-          Internal source verification. Sign in with your reviewer account.
+    <div className="rv-auth">
+      <section className="rv-auth-brand">
+        <span className="rv-auth-mark">
+          <Seal size={22} />
+        </span>
+        <h1 className="rv-auth-title">Reviewer console</h1>
+        <p className="rv-auth-lede">
+          The internal surface where official sources are verified and data is approved
+          for publication.
         </p>
-        <form onSubmit={submit}>
+        <ul className="rv-auth-list">
+          {ASSURANCES.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+        <span className="rv-auth-note">
+          Accounts are issued by an administrator. There is no self sign-up.
+        </span>
+      </section>
+
+      <section className="rv-auth-form">
+        <div className="rv-auth-head">
+          <h2>Sign in</h2>
+          <p className="rv-sub">Use the reviewer account issued to you.</p>
+        </div>
+
+        <form onSubmit={submit} noValidate={false}>
           <div className="rv-field">
             <label htmlFor="rv-email">Email</label>
             <input
@@ -58,7 +94,9 @@ export default function LoginPage() {
               className="rv-input"
               type="email"
               autoComplete="username"
+              autoFocus
               required
+              disabled={busy}
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
@@ -71,15 +109,26 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               required
+              disabled={busy}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-          {error ? <ErrorText>{error}</ErrorText> : null}
-          <button className="rv-button" type="submit" disabled={busy}>
+
+          {/* The region exists before there is an error, so a screen reader announces
+              the failure when it arrives rather than only on the next focus move. */}
+          <div className="rv-auth-error" role="alert" aria-live="polite">
+            {error ? <span>{error}</span> : null}
+          </div>
+
+          <button className="rv-button rv-auth-submit" type="submit" disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </form>
+
+        <Link className="rv-auth-back" href="/">
+          Back to the public platform
+        </Link>
       </section>
     </div>
   );

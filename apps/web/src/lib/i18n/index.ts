@@ -127,7 +127,6 @@ export interface Messages {
   readonly srcPhd: string;
   readonly srcCalendar: string;
 
-  readonly footNote: string;
 }
 
 const zh: Messages = {
@@ -219,8 +218,6 @@ const zh: Messages = {
   srcPhd: "博士入学",
   srcCalendar: "学术日历",
 
-  footNote:
-    "院校收录范围依据 QS World University Rankings 2027（版权归 QS Quacquarelli Symonds 所有）· 本平台不展示排名数值",
 };
 
 const en: Messages = {
@@ -313,8 +310,6 @@ const en: Messages = {
   srcPhd: "PhD admissions",
   srcCalendar: "Academic calendar",
 
-  footNote:
-    "Catalogue coverage follows QS World University Rankings 2027 (© QS Quacquarelli Symonds) · rank values are not displayed",
 };
 
 const DICTIONARIES: Record<Locale, Messages> = { zh, en };

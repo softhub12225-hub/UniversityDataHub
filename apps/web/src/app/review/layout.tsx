@@ -28,6 +28,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+import { Seal } from "@/components/review/seal";
 import { ReviewApiError, reviewApi } from "@/lib/review/client";
 import type { SessionInfo } from "@/lib/review/types";
 
@@ -107,7 +108,7 @@ export default function ReviewLayout({ children }: { children: React.ReactNode }
     <div className="rv-page">
       <nav className="rv-rail" aria-label="Reviewer console">
         <Link href="/review" className="rv-rail-brand">
-          <Mark />
+          <Seal />
           <span>Reviewer Console</span>
         </Link>
         {NAV.map((item) => (
@@ -162,25 +163,3 @@ function initials(name: string): string {
   return letters.toUpperCase() || "—";
 }
 
-function Mark() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-      {/* A seal: this console's whole job is attesting that a figure may be published. */}
-      <path
-        d="M12 2.6 20 6v6.2c0 4.6-3.2 8-8 9.2-4.8-1.2-8-4.6-8-9.2V6l8-3.4Z"
-        fill="none"
-        stroke="#e0a064"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m8.6 12.2 2.4 2.4 4.4-4.6"
-        fill="none"
-        stroke="#e0a064"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}

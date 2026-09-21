@@ -746,24 +746,167 @@
 
 /* ── sign in ─────────────────────────────────────────────────────────── */
 
-/* The one console page with no rail and no data, so it centres rather than
-   filling: there is nothing to scan yet. */
-.rv-login {
+/* The one console page with no rail and no data, so it centres rather than filling:
+   there is nothing to scan yet.
+ *
+ * TWO PANELS, NOT A BOX
+ * =====================
+ * It was a bordered card inside another bordered card, with the fields stacked flush
+ * against each other and no hierarchy beyond a heading. It worked and it looked
+ * unfinished. This is the page an outsider can always reach, so it is worth the same
+ * care as the screens behind it.
+ *
+ * The left panel carries the light -- the same sunrise the public platform is built
+ * on, which is what makes these two surfaces read as one product rather than two
+ * applications that happen to share a database. The right panel is the working half
+ * and stays the console's own dark, because that is what the reviewer is about to be
+ * looking at for the next few hours.
+ *
+ * It collapses to a single column below 760px, brand panel first, so the form is
+ * never pushed off a small screen by decoration. */
+.rv-auth {
   margin: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 880px;
   box-sizing: border-box;
-  padding: 28px;
-  background: var(--rv-bg-2);
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
   border: 1px solid var(--rv-rule-2);
+  overflow: hidden;
+  box-shadow: 0 24px 70px -34px rgba(0, 0, 0, 0.9);
+}
+
+/* ── the lit half ── */
+.rv-auth-brand {
+  padding: 34px 32px;
+  box-sizing: border-box;
+  /* Violet into ember: the platform's dawn, held to its dark end so the type on top
+     of it stays readable. White here is above 8:1 throughout. */
+  background:
+    radial-gradient(85% 120% at 12% 6%, rgba(224, 160, 100, 0.26), transparent 62%),
+    linear-gradient(158deg, #2a1d5e 0%, #4c2a7e 48%, #7b3260 100%);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 15px;
 }
-.rv-login h1 {
+.rv-auth-mark {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffdcb0;
+}
+.rv-auth-title {
   margin: 0;
   font-family: var(--rv-serif);
-  font-size: 23px;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: #fff;
+}
+.rv-auth-lede {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+.rv-auth-list {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* A rule rather than a bullet or a tick: these are statements of fact about the
+   system, and a row of ticks would read as a feature list on a pricing page. */
+.rv-auth-list li {
+  padding-left: 13px;
+  border-left: 2px solid rgba(255, 220, 176, 0.55);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+}
+.rv-auth-note {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+/* ── the working half ── */
+.rv-auth-form {
+  padding: 34px 32px;
+  box-sizing: border-box;
+  background: var(--rv-bg-2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rv-auth-head {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.rv-auth-head h2 {
+  margin: 0;
+  font-family: var(--rv-serif);
+  font-size: 20px;
   font-weight: 600;
   color: #f4f1e8;
+}
+.rv-auth-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.rv-auth-form .rv-input {
+  height: 44px;
+}
+/* Reserved before it is needed, so the panel does not jump when a failure arrives
+   and a screen reader announces it on the spot. */
+.rv-auth-error {
+  min-height: 18px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--rv-err);
+}
+.rv-auth-submit {
+  width: 100%;
+  margin-top: 2px;
+}
+/* --rv-ink-4 is the quietest ink in the console and it only reaches 3.72:1 on this
+   panel. A link has to be readable even when it is the least important thing on the
+   screen, so this one steps up to --rv-ink-3 at 6.92:1. */
+.rv-auth-back {
+  margin-top: auto;
+  font-size: 12.5px;
+  color: var(--rv-ink-3);
+  text-decoration: none;
+}
+.rv-auth-back:hover {
+  color: var(--rv-accent);
+}
+
+@media (max-width: 760px) {
+  .rv-auth {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+  .rv-auth-brand {
+    padding: 26px 24px;
+    gap: 12px;
+  }
+  /* On one column the three assurances push the form below the fold on a phone.
+     The heading and the lede still say what this is. */
+  .rv-auth-list,
+  .rv-auth-note {
+    display: none;
+  }
 }

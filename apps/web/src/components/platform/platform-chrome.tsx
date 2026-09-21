@@ -101,9 +101,12 @@ export function PlatformChrome({
 
       {children}
 
+      {/* The QS attribution line that sat here was removed on request. Coverage is
+          still defined by QS 2027 rank and rank values are still never displayed --
+          both facts now live only in `catalogue.ts`, where the data is generated,
+          rather than on screen. */}
       <footer className="pf-foot">
         <span className="pf-foot-brand">{copy.brand}</span>
-        <span className="pf-foot-note">{copy.footNote}</span>
       </footer>
     </div>
   );
