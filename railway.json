@@ -5,6 +5,7 @@
     "dockerfilePath": "infra/docker/web.Dockerfile"
   },
   "deploy": {
+    "startCommand": "node apps/web/server.js",
     "healthcheckPath": "/",
     "healthcheckTimeout": 30,
     "restartPolicyType": "ON_FAILURE",
