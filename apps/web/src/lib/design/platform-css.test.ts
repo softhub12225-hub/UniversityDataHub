@@ -65,12 +65,23 @@ function tsxFiles(dir: string): string[] {
   });
 }
 
-/** Every `pf-*` class the JSX puts directly on a `<Link>` or an `<a>`. */
+/**
+ * Element names that render an anchor, and therefore inherit `.pf a`.
+ *
+ * `BurstLink` is listed because it forwards its className straight to a `<Link>`. If a
+ * future wrapper is forgotten here, the "finds the anchor components" assertion below
+ * is what catches it — a scan quietly returning less is the failure mode this guard
+ * most has to survive.
+ */
+const ANCHOR_ELEMENTS = ["Link", "a", "BurstLink"] as const;
+
+/** Every `pf-*` class the JSX puts directly on one of those. */
 function anchorClasses(): ReadonlySet<string> {
   const found = new Set<string>();
+  const opening = new RegExp(`<(?:${ANCHOR_ELEMENTS.join("|")})\\b([^>]*?)>`, "gs");
   for (const file of tsxFiles(WEB_SRC)) {
     const source = readFileSync(file, "utf8");
-    for (const tag of source.matchAll(/<(?:Link|a)\b([^>]*?)>/gs)) {
+    for (const tag of source.matchAll(opening)) {
       const attributes = tag[1] ?? "";
       for (const attr of attributes.matchAll(/className=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
         const names = attr[1] ?? attr[2] ?? "";

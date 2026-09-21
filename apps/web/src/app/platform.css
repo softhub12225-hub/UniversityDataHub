@@ -783,10 +783,11 @@
   border: 1px solid transparent;
   box-shadow: 0 1px 2px rgba(70, 38, 138, 0.2), 0 8px 20px -12px rgba(70, 38, 138, 0.5);
 }
-.pf .pf-btn-solid:hover {
-  background: linear-gradient(135deg, #3a1f75 0%, #6a3092 100%);
-  box-shadow: 0 1px 2px rgba(70, 38, 138, 0.26), 0 10px 24px -12px rgba(70, 38, 138, 0.6);
-}
+/* No hover treatment, by request -- matching the institution names above it. The
+   affordance is the cursor and the button's own weight; the feedback is the burst of
+   light it throws off when it is actually pressed, which is a response to something
+   the reader did rather than to the pointer merely passing over. Focus is still shown,
+   because that is navigation. */
 .pf .pf-btn-outline {
   background: var(--pf-paper);
   color: var(--pf-accent-ink);
@@ -1082,4 +1083,124 @@
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
+}
+
+
+/* ── the burst ────────────────────────────────────────────────────────────
+ *
+ * Light thrown off where the button was pressed.
+ *
+ * These rules are NOT scoped under `.pf`, unlike everything else in this file, and
+ * that is deliberate: the layer is portalled to `document.body` to escape the result
+ * card's `overflow: hidden`, so at paint time it has no `.pf` ancestor to be scoped
+ * under. The `pf-burst` prefix keeps the names from colliding with anything else.
+ *
+ * Nothing here is interactive and nothing here is announced -- the layer is
+ * `pointer-events: none` and `aria-hidden`, so it can never swallow a click meant for
+ * the page underneath or interrupt a screen reader mid-sentence.
+ */
+
+.pf-burst-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  /* Above the page, below nothing that matters: there is no modal on this surface. */
+  z-index: 60;
+}
+.pf-burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* The flash: the light itself, gold at the centre going to nothing. */
+.pf-burst-flash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 244, 214, 0.95) 0%,
+    rgba(245, 166, 35, 0.55) 34%,
+    rgba(224, 99, 47, 0.22) 58%,
+    transparent 72%
+  );
+  animation: pf-burst-flash 380ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+/* The shock ring, travelling out ahead of the sparks. */
+.pf-burst-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 999px;
+  border: 2px solid rgba(245, 166, 35, 0.9);
+  animation: pf-burst-ring 520ms cubic-bezier(0.15, 0.7, 0.25, 1) forwards;
+}
+
+/* The sparks. Each carries its own angle, distance, size and colour as custom
+   properties, so twelve elements share one keyframe instead of twelve keyframes. */
+.pf-burst-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--pf-spark-size, 4px);
+  height: var(--pf-spark-size, 4px);
+  margin: calc(var(--pf-spark-size, 4px) / -2) 0 0 calc(var(--pf-spark-size, 4px) / -2);
+  border-radius: 999px;
+  background: var(--pf-spark-colour, var(--pf-dawn-4, #f5a623));
+  animation: pf-burst-spark 560ms cubic-bezier(0.12, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes pf-burst-flash {
+  0% {
+    transform: scale(0.25);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes pf-burst-ring {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.9;
+    border-width: 3px;
+  }
+  100% {
+    transform: scale(3.1);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+@keyframes pf-burst-spark {
+  0% {
+    transform: rotate(var(--pf-spark-angle, 0deg)) translateX(2px) scale(1);
+    opacity: 1;
+  }
+  /* Most of the travel happens early, so it reads as thrown rather than drifting. */
+  70% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: rotate(var(--pf-spark-angle, 0deg))
+      translateX(var(--pf-spark-distance, 40px)) scale(0.25);
+    opacity: 0;
+  }
+}
+
+/* Belt and braces: `BurstLink` checks the same preference before it creates anything,
+   so this only matters if the preference changes while a burst is mid-flight. */
+@media (prefers-reduced-motion: reduce) {
+  .pf-burst-layer {
+    display: none;
+  }
 }

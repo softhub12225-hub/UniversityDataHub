@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BurstLink } from "@/components/platform/burst-link";
 import { Crest } from "@/components/platform/crest";
 import mastheadLibrary from "@/components/platform/masthead-library.jpg";
 import {
@@ -370,9 +371,12 @@ export default async function CataloguePage({
                       </div>
                     </div>
                     <div className="pf-result-actions">
-                      <Link className="pf-btn pf-btn-solid" href={dossier}>
+                      {/* BurstLink rather than Link: the row's one action throws off
+                          a burst of light where it is pressed. It does not delay the
+                          navigation -- see the component. */}
+                      <BurstLink className="pf-btn pf-btn-solid" href={dossier}>
                         {copy.moreDetail}
-                      </Link>
+                      </BurstLink>
                     </div>
                   </div>
                 </article>
