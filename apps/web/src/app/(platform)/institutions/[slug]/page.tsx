@@ -70,7 +70,7 @@ export default async function InstitutionPage({
         <div className="pf-masthead-body">
           <Link
             href={backHref(locale)}
-            style={{ fontSize: "12.5px", color: "#6b736f", textDecoration: "none" }}
+            style={{ fontSize: "12.5px", color: "var(--pf-ink-3)", textDecoration: "none" }}
           >
             {copy.backToSearch}
           </Link>
@@ -81,7 +81,7 @@ export default async function InstitutionPage({
                 {institution.name}
               </h1>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                <span style={{ fontSize: "14px", color: "#4a534f" }}>
+                <span style={{ fontSize: "14px", color: "var(--pf-ink-2)" }}>
                   {destinationLabel(institution.destination, english)} ·{" "}
                   <span lang="en">{institution.country}</span>
                 </span>
@@ -207,7 +207,7 @@ export default async function InstitutionPage({
                     disagree about which domains were verified. */}
                 {verifiedDomains(slug).map((host) => (
                   <span key={host} className="pf-rail-line">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7fc2a3" strokeWidth="3" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--pf-verified)" strokeWidth="3" aria-hidden="true">
                       <path d="m20 6-11 11-5-5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <a
@@ -234,7 +234,7 @@ export default async function InstitutionPage({
                 <span className="pf-eyebrow" style={{ flexGrow: 1 }}>
                   {copy.sourceList}
                 </span>
-                <span style={{ fontSize: "12.5px", color: "#4a534f" }}>6 / 9</span>
+                <span style={{ fontSize: "12.5px", color: "var(--pf-ink-2)" }}>6 / 9</span>
               </div>
               {verifiedSourceNames.map((label) => (
                 <span key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
@@ -245,8 +245,8 @@ export default async function InstitutionPage({
               {missingSourceNames.map((label) => (
                 <span key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
                   <span className="pf-dot pf-dot-off" />
-                  <span style={{ flexGrow: 1, fontSize: "13px", color: "#6b736f" }}>{label}</span>
-                  <span style={{ fontSize: "11px", color: "#8a5a12", fontWeight: 600 }}>404</span>
+                  <span style={{ flexGrow: 1, fontSize: "13px", color: "var(--pf-ink-3)" }}>{label}</span>
+                  <span style={{ fontSize: "11px", color: "var(--pf-pending)", fontWeight: 600 }}>404</span>
                 </span>
               ))}
             </div>
@@ -302,8 +302,8 @@ function Th({ children }: { children: React.ReactNode }) {
         fontSize: "10.5px",
         fontWeight: 700,
         letterSpacing: "0.08em",
-        color: "#6b736f",
-        borderBottom: "1px solid #d9d3c4",
+        color: "var(--pf-ink-3)",
+        borderBottom: "1px solid var(--pf-rule)",
       }}
     >
       {children}
@@ -324,9 +324,9 @@ function Td({
     <td
       style={{
         padding: "13px 12px 13px 0",
-        borderBottom: "1px solid #efeae0",
+        borderBottom: "1px solid var(--pf-rule-soft)",
         fontWeight: strong ? 500 : 400,
-        color: muted ? "#4a534f" : "#141a18",
+        color: muted ? "var(--pf-ink-2)" : "var(--pf-ink)",
       }}
     >
       {children}

@@ -244,7 +244,7 @@ export default async function CataloguePage({
               {locale !== DEFAULT_LOCALE ? (
                 <input type="hidden" name="lang" value={locale} />
               ) : null}
-              <label htmlFor="pf-sort" style={{ fontSize: "13px", color: "#6b736f" }}>
+              <label htmlFor="pf-sort" style={{ fontSize: "13px", color: "var(--pf-ink-3)" }}>
                 {copy.sort}
               </label>
               <select id="pf-sort" name="sort" defaultValue={sort} className="pf-select">
@@ -293,7 +293,7 @@ export default async function CataloguePage({
 
           {result.institutions.length === 0 ? (
             <div className="pf-empty">
-              <span style={{ flexGrow: 1, fontSize: "14px", color: "#4a534f" }}>
+              <span style={{ flexGrow: 1, fontSize: "14px", color: "var(--pf-ink-2)" }}>
                 {copy.noResults(total)}{" "}
                 <Link href={locale === DEFAULT_LOCALE ? "/" : "/?lang=en"}>
                   {copy.showAll} {total}
@@ -344,7 +344,7 @@ export default async function CataloguePage({
                           this level is which origins were checked, so that is what it
                           links to. */}
                       <div className="pf-prov">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b736f" strokeWidth="1.9" aria-hidden="true">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--pf-ink-3)" strokeWidth="1.9" aria-hidden="true">
                           <rect x="3" y="4" width="18" height="16" rx="1.5" />
                           <path d="M3 9h18M8 13h8" strokeLinecap="round" />
                         </svg>

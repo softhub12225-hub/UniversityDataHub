@@ -1,18 +1,39 @@
 /*
- * The public platform's design language.
+ * The public platform's design language: "first light".
  *
- * DELIBERATELY NOT THE PORTAL TEMPLATE
- * ====================================
- * Study-abroad portals converge on one layout: photographic hero, floating search
- * box, degree-level chips, "popular universities" card grid, discipline tiles, then a
- * left filter rail beside logo-thumbnail result cards. A first draft reproduced it and
- * was rejected for looking like mastersportal.com, correctly.
+ * THE IDEA, AND WHERE IT IS ALLOWED TO SHOW
+ * =========================================
+ * Education is a light, and the people using this are young. So the interface is
+ * built on daybreak: a night-blue rail with dawn breaking at its left edge, a ground
+ * that reads as lit paper rather than grey chrome, and one gradient -- indigo through
+ * violet to ember and gold -- that stands for the light itself.
  *
- * So: search is the application frame, not a hero — a persistent bar in a dark top
- * rail. Photography is an edge plate in the masthead, subordinate to type. The ground
- * is warm parchment rather than white or SaaS blue, the accent is a single oxblood,
- * rules are hairlines, and numerals are tabular. It should read as a reference work
- * that happens to be searchable.
+ * That gradient appears only on surfaces representing the platform: the rail, the
+ * wordmark, the primary action, the masthead, the footer, the page's top edge. It
+ * never touches the two colours that carry meaning. `verified` green and `pending`
+ * amber stay flat, single and unmistakable, because a reader has to tell those two
+ * apart at a glance and decoration does not get a vote in it.
+ *
+ * TEXT NEVER SITS ON THE WARM END
+ * ===============================
+ * The full dawn runs from #3b2f8f to #f5a623. White on the gold end measures 2.03:1,
+ * which is unreadable. So every gradient behind text is cut to the dark half --
+ * #46268a to #7a3aa6, which holds white at 7:1 or better -- and ember and gold are
+ * kept for glows, hairlines and the page edge, where nothing has to be read.
+ * "Add a gradient" is not a licence to make type harder to read.
+ *
+ * WHAT DID NOT CHANGE, ON PURPOSE
+ * ===============================
+ * Search stays in the rail rather than in a photographic hero, because that is the
+ * decision that keeps this off the study-abroad portal template. Provenance stays on
+ * every result. Numerals stay tabular, rules stay hairlines. Institution names still
+ * have no hover treatment -- that was asked for and it was right: the underline and
+ * colour change read as an error state across a list of names.
+ *
+ * Corners are the one piece of the old grammar that went. Square edges said
+ * reference work; they also said austere, and this is a platform for
+ * eighteen-year-olds. The radii are small -- 10px on cards, 7px on controls, full on
+ * tags -- so it softens without becoming a consumer app.
  *
  * WHY ONE STYLESHEET AND NOT UTILITY CLASSES
  * ==========================================
@@ -23,35 +44,62 @@
  */
 
 .pf {
-  /* ground and ink */
-  --pf-ground: #f4f1e8;
-  --pf-paper: #fcfbf7;
-  --pf-ink: #141a18;
-  --pf-ink-2: #4a534f;
-  --pf-ink-3: #6b736f;
-  --pf-rule: #d9d3c4;
-  --pf-rule-soft: #efeae0;
+  /* ── ground and ink: paper, but lit ── */
+  --pf-ground: #f6f4ef;
+  --pf-paper: #ffffff;
+  --pf-ink: #171a21;
+  --pf-ink-2: #454c5a;
+  --pf-ink-3: #656d7c; /* 4.74:1 on the ground, 5.21:1 on paper -- the ground is the harder of the two and #6b7385 only made 4.33 */
+  --pf-rule: #e3ded3;
+  --pf-rule-soft: #efebe2;
 
-  /* one accent, plus the two states that carry meaning */
-  --pf-accent: #8c2f1f;
-  --pf-accent-ink: #6b2116;
-  --pf-verified: #1e6b4f;
-  --pf-verified-bg: #eaf2ec;
-  --pf-verified-rule: #bfd8c9;
-  --pf-pending: #8a5a12;
-  --pf-pending-bg: #f6eede;
-  --pf-pending-rule: #e3d3b4;
+  /* ── the light ──
+     Four stops of one sunrise. `--pf-light` is the full sweep, for edges and glows
+     where nothing is read; `--pf-light-deep` is the readable half, for anything
+     with text on it. See the header for the contrast arithmetic. */
+  --pf-dawn-1: #3b2f8f;
+  --pf-dawn-2: #7a3aa6;
+  --pf-dawn-3: #e0632f;
+  --pf-dawn-4: #f5a623;
+  --pf-light: linear-gradient(
+    115deg,
+    var(--pf-dawn-1) 0%,
+    var(--pf-dawn-2) 36%,
+    var(--pf-dawn-3) 74%,
+    var(--pf-dawn-4) 100%
+  );
+  --pf-light-deep: linear-gradient(135deg, #46268a 0%, var(--pf-dawn-2) 100%);
 
-  /* the dark rail */
-  --pf-rail: #141a18;
-  --pf-rail-2: #22292a;
-  --pf-rail-rule: #39423f;
-  --pf-rail-ink: #c9cfcb;
-  --pf-rail-ink-2: #8e948f;
-  --pf-sand: #f4c9a0;
+  /* ── the action colour ── */
+  --pf-accent: #5b34b0;
+  --pf-accent-ink: #46268a;
+  --pf-accent-soft: #f2edfd;
+  --pf-accent-rule: #dccff8;
+  --pf-focus: 0 0 0 3px rgba(91, 52, 176, 0.28);
 
-  --pf-serif: Fraunces, "Noto Serif SC", Georgia, serif;
-  --pf-sans: "Instrument Sans", "Noto Sans SC", system-ui, sans-serif;
+  /* ── the two states that carry meaning. Flat, always. ── */
+  --pf-verified: #0f7a52;
+  --pf-verified-bg: #e9f6ef;
+  --pf-verified-rule: #b6ddc9;
+  --pf-pending: #96640f;
+  --pf-pending-bg: #fdf4e3;
+  --pf-pending-rule: #eedfba;
+
+  /* ── night: the rail and the footer ── */
+  --pf-rail: #14122b;
+  --pf-rail-2: #221f42;
+  --pf-rail-rule: #35315c;
+  --pf-rail-ink: #d5d1ee;
+  --pf-rail-ink-2: #9c97c4;
+  --pf-sand: #ffd3a1;
+
+  /* ── form ── */
+  --pf-r: 10px;
+  --pf-r-sm: 7px;
+  --pf-lift: 0 1px 2px rgba(23, 26, 33, 0.05), 0 10px 26px -18px rgba(23, 26, 33, 0.22);
+
+  --pf-serif: var(--pf-font-serif), "Noto Serif SC", Georgia, serif;
+  --pf-sans: var(--pf-font-sans), "Noto Sans SC", system-ui, sans-serif;
 
   background: var(--pf-ground);
   color: var(--pf-ink);
@@ -59,6 +107,16 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* The page's top edge: the whole sunrise, three pixels of it. The one place the
+   gradient is shown undiluted, because nothing sits on top of it. */
+.pf::before {
+  content: "";
+  height: 3px;
+  flex-shrink: 0;
+  background: var(--pf-light);
 }
 
 /* The default for an inline link in prose.
@@ -68,13 +126,15 @@
  * `.pf a` is one class plus one element, so it outranks any rule written with a
  * single class -- whatever the order in this file. Every component that renders as an
  * anchor (button, pager, chip, source link) therefore has to state its colour with at
- * least two classes, `.pf .pf-x`, or this rule silently wins and paints it oxblood.
+ * least two classes, `.pf .pf-x`, or this rule silently wins and paints it accent.
  *
  * That is not hypothetical. It went unnoticed while the primary button was near-black,
- * because oxblood-on-black is merely poor contrast. The moment the button became
- * oxblood the text and the background were the same colour and it disappeared
- * completely -- reported as "I can't see button name on button". The bug was always
- * here; changing the background only made it visible, which is to say invisible.
+ * because accent-on-black is merely poor contrast. The moment the button took the
+ * accent colour, text and background matched and the label disappeared completely --
+ * reported as "I can't see button name on button". The bug was always here; changing
+ * the background only made it visible, which is to say invisible.
+ *
+ * `platform-css.test.ts` now fails the build rather than trusting anyone to remember.
  */
 .pf a {
   color: var(--pf-accent);
@@ -83,24 +143,64 @@
   color: var(--pf-accent-ink);
 }
 
+/* One focus treatment for the whole surface. A glow, so it belongs to a design about
+   light -- but at full opacity behind a solid outline, so it is never decorative. */
+.pf a:focus-visible,
+.pf button:focus-visible,
+.pf input:focus-visible,
+.pf select:focus-visible {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: 2px;
+  box-shadow: var(--pf-focus);
+}
+
 /* ── the app rail: search lives here, not in a hero ───────────────────── */
 
 .pf-rail {
-  background: var(--pf-rail);
+  /* Night, with the sun not yet up on the left: two radial washes over a flat base,
+     the ember low and left, the violet beneath the wordmark. */
+  background:
+    radial-gradient(60% 260% at 0% 60%, rgba(224, 99, 47, 0.32), transparent 58%),
+    radial-gradient(42% 200% at 20% 130%, rgba(122, 58, 166, 0.42), transparent 62%),
+    linear-gradient(90deg, #14122b 0%, #1a1836 48%, #1c1a31 100%);
   display: flex;
   align-items: center;
   gap: 22px;
   padding: 0 28px;
-  min-height: 60px;
+  min-height: 62px;
   flex-wrap: wrap;
+  position: relative;
+}
+/* A lit hairline where the rail meets the page, fading out to the right: the light
+   arrives from one side rather than boxing the header in. */
+.pf-rail::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--pf-dawn-4) 0%,
+    var(--pf-dawn-3) 22%,
+    rgba(122, 58, 166, 0.5) 52%,
+    transparent 88%
+  );
 }
 
-.pf-brand {
+/* Two classes, because the wordmark is an anchor: see the specificity note above.
+   The guard caught this one before it shipped -- `.pf-brand` alone would have lost
+   to `.pf a` and painted the rail's mark accent-purple instead of sand. */
+.pf .pf-brand {
   display: flex;
   align-items: center;
   gap: 9px;
   text-decoration: none;
   flex-shrink: 0;
+  /* The mark is drawn with currentColor, so it takes the sand from here; the
+     wordmark beside it overrides with the gradient below. */
+  color: var(--pf-sand);
 }
 .pf-brand span {
   font-family: var(--pf-serif);
@@ -110,6 +210,18 @@
   text-transform: uppercase;
   color: var(--pf-sand);
 }
+/* Gradient text, guarded. `background-clip: text` needs `color: transparent`, which
+   renders an invisible wordmark wherever the property is unsupported -- so the flat
+   sand above has to be able to stand on its own, and this only overrides it where
+   the clip actually works. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .pf-brand span {
+    background: linear-gradient(94deg, #ffdcb0 0%, #ffb3cf 52%, #cdbaff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
 
 .pf-railsearch {
   flex: 1 1 320px;
@@ -117,11 +229,18 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 38px;
-  padding: 0 14px;
+  height: 40px;
+  padding: 0 15px;
   box-sizing: border-box;
-  background: var(--pf-rail-2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--pf-rail-rule);
+  color: var(--pf-rail-ink-2);
+}
+.pf-railsearch:focus-within {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: var(--pf-sand);
+  box-shadow: 0 0 0 3px rgba(255, 211, 161, 0.18);
 }
 .pf-railsearch input {
   flex-grow: 1;
@@ -130,11 +249,16 @@
   background: transparent;
   font: inherit;
   font-size: 14px;
-  color: var(--pf-paper);
+  color: #fff;
   outline: none;
 }
 .pf-railsearch input::placeholder {
   color: var(--pf-rail-ink-2);
+}
+/* The field itself already shows focus; a second ring inside it is noise. */
+.pf .pf-railsearch input:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .pf-railnav {
@@ -160,9 +284,10 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 30px;
-  padding: 0 11px;
+  height: 31px;
+  padding: 0 12px;
   box-sizing: border-box;
+  border-radius: 999px;
   border: 1px solid var(--pf-rail-rule);
   color: var(--pf-rail-ink);
   font-size: 12.5px;
@@ -174,31 +299,55 @@
   color: var(--pf-sand);
 }
 
+/* Sign-in is the rail's one action, so it takes the sand rather than the dawn: on a
+   night rail a warm solid reads as the light, where a violet gradient would sink
+   into the background it sits on. */
 .pf-railnav .pf-cta {
   display: flex;
   align-items: center;
-  height: 34px;
-  padding: 0 15px;
+  height: 35px;
+  padding: 0 16px;
   box-sizing: border-box;
-  background: var(--pf-sand);
-  color: #2a1512;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #ffdcb0, var(--pf-sand));
+  color: #3a1d0b;
   font-weight: 600;
 }
 .pf-railnav .pf-cta:hover {
   background: #fff;
-  color: #2a1512;
+  color: #3a1d0b;
 }
 
 /* ── masthead: type left, photographic plate at the edge ──────────────── */
 
 .pf-masthead {
   display: flex;
-  background: var(--pf-paper);
-  border-bottom: 1px solid var(--pf-rule);
+  /* Light entering the page: gold from the top-left corner, a violet counterweight
+     from below, over paper fading into the ground. */
+  background:
+    radial-gradient(120% 200% at 0% 0%, rgba(245, 166, 35, 0.16), transparent 58%),
+    radial-gradient(90% 150% at 16% 130%, rgba(91, 52, 176, 0.1), transparent 62%),
+    linear-gradient(180deg, #fffdf9 0%, var(--pf-ground) 100%);
+  position: relative;
+}
+.pf-masthead::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--pf-dawn-2) 0%,
+    var(--pf-dawn-3) 26%,
+    rgba(245, 166, 35, 0.45) 55%,
+    transparent 86%
+  );
 }
 .pf-masthead-body {
   flex-grow: 1;
-  padding: 16px 28px;
+  padding: 26px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -208,9 +357,10 @@
 .pf-masthead h1 {
   margin: 0;
   font-family: var(--pf-serif);
-  font-size: 27px;
+  font-size: 31px;
   font-weight: 500;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
   color: var(--pf-ink);
 }
 .pf-plate {
@@ -226,6 +376,20 @@
   object-fit: cover;
   object-position: center;
 }
+/* The photograph is not pasted on: the ground bleeds into its left edge so the
+   masthead reads as one lit surface rather than a picture in a box. */
+.pf-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--pf-ground) 0%,
+    rgba(246, 244, 239, 0.16) 34%,
+    transparent 62%
+  );
+  pointer-events: none;
+}
 @media (max-width: 900px) {
   .pf-plate {
     display: none;
@@ -236,7 +400,7 @@
 
 .pf-body {
   flex-grow: 1;
-  padding: 20px 28px;
+  padding: 22px 28px;
   display: flex;
   gap: 24px;
   align-items: flex-start;
@@ -281,21 +445,27 @@
   text-transform: uppercase;
   color: var(--pf-ink-3);
 }
+/* Even the divider is lit from the left. */
 .pf-hr {
   flex-grow: 1;
   height: 1px;
-  background: var(--pf-rule);
+  background: linear-gradient(90deg, var(--pf-rule), rgba(227, 222, 211, 0));
 }
 
 .pf-facet {
   margin: 0;
-  padding: 14px;
+  padding: 15px;
   border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r);
   background: var(--pf-paper);
+  box-shadow: var(--pf-lift);
 }
-/* The verification facet is the one no competitor has, so it is framed harder. */
+/* The verification facet is the one no competitor offers, so it is framed harder --
+   and in the accent rather than ink, which is what makes it read as the platform's
+   own idea rather than one more filter. */
 .pf-facet-primary {
-  border: 1.5px solid var(--pf-ink);
+  border: 1.5px solid var(--pf-accent-rule);
+  background: linear-gradient(180deg, var(--pf-accent-soft) 0%, var(--pf-paper) 62%);
 }
 .pf-facet legend {
   padding: 0 6px;
@@ -306,6 +476,7 @@
 .pf-facet-primary legend {
   font-family: var(--pf-serif);
   font-size: 13.5px;
+  color: var(--pf-accent-ink);
 }
 .pf-facet-list {
   display: flex;
@@ -354,7 +525,6 @@
   color: var(--pf-ink-3);
 }
 
-
 /* ── result controls ──────────────────────────────────────────────────── */
 
 .pf-controls {
@@ -365,24 +535,26 @@
 }
 .pf-scope {
   display: flex;
-  border: 1.5px solid var(--pf-ink);
+  border: 1px solid var(--pf-rule);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--pf-paper);
 }
 .pf-scope a,
 .pf-scope span {
-  padding: 8px 16px;
+  padding: 8px 17px;
   font-size: 13.5px;
   font-weight: 500;
   text-decoration: none;
 }
 .pf-scope .pf-on {
-  background: var(--pf-ink);
-  color: var(--pf-paper);
+  background: var(--pf-light-deep);
+  color: #fff;
   font-weight: 600;
 }
 .pf-scope .pf-off {
-  background: var(--pf-paper);
+  background: transparent;
   color: var(--pf-ink-3);
-  border-left: 1.5px solid var(--pf-ink);
 }
 .pf-tally {
   flex-grow: 1;
@@ -394,10 +566,11 @@
   font-variant-numeric: tabular-nums;
 }
 .pf-select {
-  height: 34px;
+  height: 36px;
   padding: 0 10px;
   box-sizing: border-box;
   border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r-sm);
   background: var(--pf-paper);
   font: inherit;
   font-size: 13px;
@@ -413,7 +586,8 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 11px;
+  padding: 5px 12px;
+  border-radius: 999px;
   background: var(--pf-paper);
   border: 1px solid var(--pf-rule);
   font-size: 12.5px;
@@ -431,20 +605,26 @@
 
 .pf-result {
   border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r);
   background: var(--pf-paper);
+  box-shadow: var(--pf-lift);
   display: flex;
+  overflow: hidden;
 }
 /* A verified institution is framed, not decorated: the left bar is the state. */
 .pf-result-verified {
-  border: 1.5px solid var(--pf-ink);
+  border-color: var(--pf-verified-rule);
 }
+/* The bar takes a gradient, but strictly inside its own hue -- lighter at the top,
+   as though lit from above. It stays unambiguously green, which is the part that
+   matters: this is a state, not an ornament. */
 .pf-result-bar {
   width: 5px;
   flex-shrink: 0;
-  background: #d9c9a3;
+  background: linear-gradient(180deg, #e8dec6, #d8c69c);
 }
 .pf-result-verified .pf-result-bar {
-  background: var(--pf-verified);
+  background: linear-gradient(180deg, #19a06c, var(--pf-verified));
 }
 .pf-result-main {
   flex-grow: 1;
@@ -454,10 +634,19 @@
   align-items: flex-start;
   min-width: 0;
 }
+/* The crest's field is a CSS background rather than a filled <rect>, so the gradient
+   can live here instead of needing an SVG <linearGradient> id per card -- which,
+   repeated down a list of twenty, would put duplicate ids in the document. */
 .pf-crest {
   width: 46px;
   height: 46px;
   flex-shrink: 0;
+  border-radius: var(--pf-r-sm);
+  background: #e8e2d4;
+  overflow: hidden;
+}
+.pf-crest-verified {
+  background: var(--pf-light-deep);
 }
 .pf-result-text {
   flex-grow: 1;
@@ -473,12 +662,12 @@
   flex-wrap: wrap;
 }
 .pf-result-title a {
-  font-size: 17px;
+  font-size: 17.5px;
   font-weight: 600;
   color: var(--pf-ink);
   text-decoration: none;
 }
-/* No hover treatment, deliberately. The underline-and-turn-red default read as an
+/* No hover treatment, deliberately. The underline-and-recolour default read as an
    error state against a list of institution names, and every row already carries a
    More Detail button as its affordance. Keyboard focus is still shown -- that is
    navigation, not decoration. */
@@ -501,7 +690,8 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 8px;
+  padding: 3px 9px;
+  border-radius: 999px;
   font-size: 11.5px;
   font-weight: 600;
   white-space: nowrap;
@@ -556,6 +746,17 @@
   color: var(--pf-accent);
   text-decoration-color: var(--pf-accent);
 }
+/* On the dossier's night-coloured rail card that same link was ink on near-black at
+   2.2:1 -- present, and effectively unreadable. Context decides the colour; the
+   component only decides that it is a link. */
+.pf .pf-rail-card .pf-src {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
+}
+.pf .pf-rail-card .pf-src:hover {
+  color: var(--pf-sand);
+  text-decoration-color: var(--pf-sand);
+}
 
 .pf-btn {
   display: inline-flex;
@@ -564,6 +765,7 @@
   height: 40px;
   padding: 0 20px;
   box-sizing: border-box;
+  border-radius: var(--pf-r-sm);
   font: inherit;
   font-size: 13.5px;
   font-weight: 600;
@@ -571,28 +773,28 @@
   white-space: nowrap;
   cursor: pointer;
 }
-/* The accent, not near-black. Black read as furniture rather than as the row's
-   action, and it was the heaviest thing on a light page -- the eye went to it before
-   the institution name. Oxblood is the palette's one action colour and is already
-   what every link on the page uses, so the primary button now matches rather than
-   competes. Hover darkens rather than switching hue: the affordance is confirmed,
-   not restated. */
+/* The primary action carries the light, cut to its readable half: white on this
+   gradient is about 11:1 at the indigo end and 7:1 at the violet end. Written with
+   both classes, `.pf .pf-btn-solid`, because a single class loses to `.pf a` -- see
+   the note at the top of this file, and the test that enforces it. */
 .pf .pf-btn-solid {
-  background: var(--pf-accent);
+  background: var(--pf-light-deep);
   color: #fff;
-  border: 1.5px solid var(--pf-accent);
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(70, 38, 138, 0.2), 0 8px 20px -12px rgba(70, 38, 138, 0.5);
 }
 .pf .pf-btn-solid:hover {
-  background: var(--pf-accent-ink);
-  border-color: var(--pf-accent-ink);
+  background: linear-gradient(135deg, #3a1f75 0%, #6a3092 100%);
+  box-shadow: 0 1px 2px rgba(70, 38, 138, 0.26), 0 10px 24px -12px rgba(70, 38, 138, 0.6);
 }
 .pf .pf-btn-outline {
   background: var(--pf-paper);
-  color: var(--pf-ink);
-  border: 1.5px solid var(--pf-ink);
+  color: var(--pf-accent-ink);
+  border: 1.5px solid var(--pf-accent-rule);
 }
 .pf .pf-btn-outline:hover {
-  background: var(--pf-ground);
+  background: var(--pf-accent-soft);
+  border-color: var(--pf-accent);
 }
 
 /* ── pager ────────────────────────────────────────────────────────────── */
@@ -613,11 +815,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 34px;
-  height: 34px;
+  min-width: 36px;
+  height: 36px;
   padding: 0 10px;
   box-sizing: border-box;
   border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r-sm);
   background: var(--pf-paper);
   font: inherit;
   font-size: 13px;
@@ -626,15 +829,17 @@
   text-decoration: none;
 }
 .pf .pf-page-on {
-  border: 1.5px solid var(--pf-ink);
-  background: var(--pf-ink);
-  color: var(--pf-paper);
+  border-color: transparent;
+  background: var(--pf-light-deep);
+  color: #fff;
   font-weight: 600;
 }
+/* WCAG exempts inactive controls from contrast, which is not a reason to make one
+   illegible: 3.05:1 still reads as unavailable without vanishing. */
 .pf .pf-page-off {
-  color: #a8a197;
-  background: #faf8f1;
-  border-color: #e0dacb;
+  color: #8a8994;
+  background: #f3f1ea;
+  border-color: var(--pf-rule);
   cursor: not-allowed;
 }
 
@@ -642,7 +847,7 @@
 
 .pf-doc {
   flex-grow: 1;
-  padding: 22px 28px;
+  padding: 24px 28px;
   background: var(--pf-paper);
   display: flex;
   gap: 26px;
@@ -702,13 +907,14 @@
   padding: 16px;
   box-sizing: border-box;
   border: 1px solid var(--pf-rule);
-  background: var(--pf-ground);
+  border-radius: var(--pf-r);
+  background: linear-gradient(180deg, #fbfaf6, var(--pf-ground));
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 .pf-fact-pending {
-  background: #faf5ea;
+  background: linear-gradient(180deg, #fdf7ec, #faf3e4);
   border-color: var(--pf-pending-rule);
 }
 .pf-fact-label {
@@ -723,8 +929,8 @@
   letter-spacing: 0.08em;
   color: var(--pf-ink-3);
 }
-/* A value the platform cannot yet stand behind. Styled as a real state, because
-   it is one — not as an error, and never filled with a guess. */
+/* A value the platform cannot yet stand behind. Styled as a real state, because it
+   is one -- not as an error, and never filled with a guess. */
 .pf-fact-value {
   font-family: var(--pf-serif);
   font-size: 26px;
@@ -737,16 +943,19 @@
 }
 .pf-fact-prov {
   padding-top: 7px;
-  border-top: 1px solid #e0dacb;
+  border-top: 1px solid var(--pf-rule);
   font-size: 11.5px;
   line-height: 1.5;
   color: var(--pf-ink-2);
 }
 
 .pf-rail-card {
-  padding: 16px;
+  padding: 17px;
   box-sizing: border-box;
-  background: var(--pf-rail);
+  border-radius: var(--pf-r);
+  background:
+    radial-gradient(90% 160% at 8% 0%, rgba(224, 99, 47, 0.22), transparent 60%),
+    linear-gradient(160deg, #1a1836 0%, var(--pf-rail) 100%);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -759,7 +968,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--pf-paper);
+  color: #fff;
 }
 .pf-rail-line svg {
   flex-shrink: 0;
@@ -774,47 +983,54 @@
   padding: 16px;
   box-sizing: border-box;
   border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r);
   background: var(--pf-ground);
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 .pf-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
   flex-shrink: 0;
 }
 .pf-dot-on {
   background: var(--pf-verified);
 }
 .pf-dot-off {
-  background: #c9a25a;
+  background: #d3a457;
 }
 
 .pf-callout {
   margin: 12px 0 0;
   padding: 12px 14px;
   box-sizing: border-box;
-  background: var(--pf-ground);
-  border: 1px solid var(--pf-rule);
+  border-radius: var(--pf-r-sm);
+  background: var(--pf-accent-soft);
+  border: 1px solid var(--pf-accent-rule);
   font-size: 12.5px;
   line-height: 1.6;
   color: var(--pf-ink-2);
 }
 .pf-callout strong {
-  color: var(--pf-ink);
+  color: var(--pf-accent-ink);
 }
 .pf-callout-warn {
   background: var(--pf-pending-bg);
   border-color: var(--pf-pending-rule);
-  color: #6b4a12;
+  color: #6d4809;
+}
+.pf-callout-warn strong {
+  color: #55370a;
 }
 
 .pf-empty {
-  padding: 26px;
+  padding: 28px;
   box-sizing: border-box;
-  border: 1px dashed #c9c0ae;
-  background: var(--pf-paper);
+  border: 1px dashed var(--pf-accent-rule);
+  border-radius: var(--pf-r);
+  background: linear-gradient(180deg, var(--pf-accent-soft), var(--pf-paper));
   display: flex;
   align-items: center;
   gap: 16px;
@@ -824,12 +1040,32 @@
 /* ── footer ───────────────────────────────────────────────────────────── */
 
 .pf-foot {
-  padding: 16px 28px;
-  background: var(--pf-rail);
+  padding: 18px 28px;
+  background:
+    radial-gradient(50% 240% at 100% 50%, rgba(122, 58, 166, 0.34), transparent 60%),
+    linear-gradient(90deg, #1c1a31 0%, #14122b 100%);
   display: flex;
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  position: relative;
+}
+/* The rail's hairline, mirrored: light leaving the page on the side it did not enter,
+   which closes the composition. */
+.pf-foot::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 14%,
+    rgba(122, 58, 166, 0.5) 48%,
+    var(--pf-dawn-3) 78%,
+    var(--pf-dawn-4) 100%
+  );
 }
 .pf-foot-brand {
   font-family: var(--pf-serif);
