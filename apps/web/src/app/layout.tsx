@@ -24,6 +24,12 @@ export default function RootLayout({
             <nav className="shell-nav">
               <Link href="/">Overview</Link>
               <Link href="/system-status">System status</Link>
+              {/*
+                The console is the reason this application exists, and until now the
+                only way to reach it was to already know the URL: a reviewer opening
+                the deployed site found an overview page, a status page, and no way in.
+              */}
+              <Link href="/review">Reviewer console</Link>
             </nav>
           </header>
           <main className="shell-main">{children}</main>
